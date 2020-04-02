@@ -24,4 +24,4 @@ def postsign(request):
         message = "invalid cerediantials"
         return render(request,"signIn.html",{"msg":message})
     print(user)
-    return render(request, "welcome.html",{"e":email})
+    return render(request, "welcome.html",{"email":email})
