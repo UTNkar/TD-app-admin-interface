@@ -1,0 +1,75 @@
+@import url('https://rsms.me/inter/inter.css');
+body {
+    background-image: url(../images/byt-bild-sen.jpg);
+    color: #FF71FF;
+    font-family: 'Inter';
+}
+
+h1 {
+    background-color: white;
+    font-size: 1.5em;
+    text-align: center;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    height: 2em;
+    margin-top: 0em;
+    padding-top: 1em;
+}
+
+#form-box {
+    background-color: #342A3B;
+    position: absolute;
+    top: 22%;
+    left: 35%;
+    width: 30%;
+    height: 23em;
+    border-radius: 1.5em;
+}
+
+#TD-logo {
+    width: 20%;
+    margin-top: 1.5em;
+    margin-left: 1.5em;
+}
+
+#arr-UTN-logo {
+    width: 9%;
+    margin-top: 0.1em;
+    margin-left: 9.7em;
+}
+
+#email-box {
+    margin-top: 2em;
+    text-align: center;
+}
+
+#email {
+    margin-top: 0.5em;
+}
+
+#password-box {
+    margin-top: 1em;
+    text-align: center;
+}
+
+#password {
+    margin-top: 0.5em;
+}
+
+.input {
+    width: 20em;
+    height: 3em;
+}
+
+#login-button {
+    background-color: #FF71FF;
+    color: white;
+    position: absolute;
+    bottom: 3em;
+    left: 9em;
+    width: 25%;
+    height: 2em;
+    border: 0px;
+    border-radius: 0.6em;
+    font-size: 1em;
+}
