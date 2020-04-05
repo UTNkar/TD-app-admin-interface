@@ -1,10 +1,31 @@
+{% if msg %}
+
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %} {% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/welcome.css' %}">
+
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        {% csrf_token %}
-        Welcome {{email}}
-    </body>
+
+{% include "header.html" %}
+
+<body>
+    {% csrf_token %}
+    <div class="sidenav">
+        <h1 id="#header-text">
+            Inloggad som {{email}}
+        </h1>
+        <a class="active" href="#">Start</a>
+        <a href="page2/">Nåt annat</a>
+        <a href="#">Nåt annat</a>
+        <a href="#">Nåt annat</a>
+    </div>
+
+    <div class="main">
+        ...
+    </div>
+</body>
+
 </html>
