@@ -4,40 +4,13 @@ body {
 }
 
 h1 {
-    background-color: white;
+    background-color: #342A3B;
+    color: white;
     font-size: 1em;
     text-align: center;
     height: 5em;
     margin-top: 0em;
     padding-top: 1em;
-}
-
-.active {
-    color: #FF71FF !important;
-}
-
-.sidenav {
-    height: 100%;
-    width: 15em;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #342A3B;
-    overflow-x: hidden;
-    padding-top: 2em;
-}
-
-.sidenav a {
-    padding: 0.3em 0.3em 0.3em 1em;
-    text-decoration: none;
-    font-size: 1.5em;
-    color: white;
-    display: block;
-}
-
-.sidenav a:hover {
-    color: #FF71FF;
 }
 
 

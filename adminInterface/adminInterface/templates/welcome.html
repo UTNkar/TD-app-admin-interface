@@ -1,31 +1,9 @@
-{% if msg %}
+{% extends "base.html"%} 
 
-<script>
-    alert('{{msg}}')
-</script>
-{% endif %} {% load static %}
+{% block content %} 
+ 
+<h1 id="#header-text">
+    Welcome{{email}} {{request.path}}
+</h1>
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/welcome.css' %}">
-
-<html lang="en">
-
-{% include "header.html" %}
-
-<body>
-    {% csrf_token %}
-    <div class="sidenav">
-        <h1 id="#header-text">
-            Inloggad som {{email}}
-        </h1>
-        <a class="active" href="#">Start</a>
-        <a href="page2/">Nåt annat</a>
-        <a href="#">Nåt annat</a>
-        <a href="#">Nåt annat</a>
-    </div>
-
-    <div class="main">
-        ...
-    </div>
-</body>
-
-</html>
+{%endblock%}

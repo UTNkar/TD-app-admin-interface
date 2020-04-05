@@ -1,0 +1,25 @@
+{% load block_tags %}
+{% if msg %}
+
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %} {% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/welcome.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/page2.css' %}">
+
+<html lang="en"> 
+
+{% include "header.html" %}
+
+<body>
+    
+    {% navigation_bar %}
+
+    <div class="main">
+        {% block content%}{% endblock %}
+    </div>
+</body>
+
+</html>

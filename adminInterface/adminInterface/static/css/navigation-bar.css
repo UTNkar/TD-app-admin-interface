@@ -1,0 +1,28 @@
+@import url('https://rsms.me/inter/inter.css');
+.sidenav {
+    height: 100%;
+    width: 15em;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #342A3B;
+    overflow-x: hidden;
+    padding-top: 2em;
+}
+
+.active {
+    color: #FF71FF !important;
+}
+
+.sidenav a {
+    padding: 0.3em 0.3em 0.3em 1em;
+    text-decoration: none;
+    font-size: 1.5em;
+    color: white;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #FF71FF;
+}

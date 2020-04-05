@@ -1,0 +1,23 @@
+{% load block_tags %}
+{% if msg %}
+
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %} {% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/navigation-bar.css' %}">
+
+<div class="sidenav">
+    <h1 id="#header-text">
+        Inloggad som {{email}}
+    </h1>
+    {% for link in links%}
+        {% if link in request.path %}
+            <a class="active" href="{{link}}">Nåt annat</a>
+        {% else %}
+            <a href="{{link}}">Nåt annat</a>
+        {%endif%}
+    {% endfor %} 
+    
+</div>
