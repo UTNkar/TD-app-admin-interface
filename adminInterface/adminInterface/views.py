@@ -1,6 +1,7 @@
 import pyrebase
 import os
 from django.shortcuts import render 
+from django.http import HttpResponse
 
 config = {
 'apiKey': os.environ.get("FIREBASE_APIKEY"),
@@ -25,3 +26,6 @@ def postsign(request):
         return render(request,"signIn.html",{"msg":message})
     print(user)
     return render(request, "welcome.html",{"email":email})
+
+def page2(request):
+    return render(request, "page2.html")
