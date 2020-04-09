@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 
 config = {
@@ -32,8 +32,9 @@ def start(request):
 def postsign(request):
     uname = request.POST.get('username')
     passw = request.POST.get("pass")
-    user = authenticate(username=uname, password=passw)
+    user = authenticate(request, username=uname, password=passw)
     if user is not None:
+        login(request, user)
         return redirect('/postsign/start')
     else:
         message = "invalid cerediantials"
