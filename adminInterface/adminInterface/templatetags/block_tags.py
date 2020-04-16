@@ -4,6 +4,7 @@ register = template.Library()
 
 @register.inclusion_tag("navigation_bar.html", takes_context=True)
 def navigation_bar(context):
+    # The links must have the title as the key and the link as the value
     links = {
         'Start': "/start",
         'Nåt annat': "/page2"
@@ -12,5 +13,3 @@ def navigation_bar(context):
         'links': links,
         'request': context['request']
     }
-
-# funkar ej, raderar om jag inte får det att funka 
