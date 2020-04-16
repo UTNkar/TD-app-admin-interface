@@ -1,0 +1,21 @@
+{% load block_tags %}
+{% if msg %}
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %} {% load static %}
+
+<html lang="en"> 
+
+{% include "header.html" %}
+
+<body>
+
+    {% include "navigation_bar.html" %}
+
+    <div class="main">
+        {% block content%}{% endblock %}
+    </div>
+</body>
+
+</html>

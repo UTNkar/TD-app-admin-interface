@@ -1,6 +1,11 @@
 import pyrebase
 import os
-from django.shortcuts import render 
+from django.shortcuts import render, redirect 
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 config = {
 'apiKey': os.environ.get("FIREBASE_APIKEY"),
@@ -15,13 +20,26 @@ auth = firebase.auth()
 def singIn(request):
     return render(request, "signIn.html")
 
-def postsign(request):
-    email=request.POST.get('email')
+@login_required
+def page2(request):
+    return render(request, "page2.html")
+
+@login_required
+def start(request):
+    return render(request, "welcome.html")
+
+def login_user(request):
+    uname = request.POST.get('username')
     passw = request.POST.get("pass")
-    try:
-        user = auth.sign_in_with_email_and_password(email,passw)
-    except:
+    user = authenticate(request, username=uname, password=passw)
+    if user is not None:
+        login(request, user)
+        return redirect('/start')
+    else:
         message = "invalid cerediantials"
-        return render(request,"signIn.html",{"msg":message})
-    print(user)
-    return render(request, "welcome.html",{"email":email})
+        return redirect('/')
+        
+    
+    
+        
+

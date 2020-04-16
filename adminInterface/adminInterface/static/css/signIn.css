@@ -11,7 +11,7 @@ h1 {
     text-align: center;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
-    height: 2em;
+    height: 3em !important;
     margin-top: 0em;
     padding-top: 1em;
 }
@@ -38,12 +38,12 @@ h1 {
     margin-left: 9.7em;
 }
 
-#email-box {
-    margin-top: 2em;
+#username-box {
+    margin-top: 1em;
     text-align: center;
 }
 
-#email {
+#username {
     margin-top: 0.5em;
 }
 
@@ -66,7 +66,7 @@ h1 {
     color: white;
     position: absolute;
     bottom: 3em;
-    left: 9em;
+    left: 38%;
     width: 25%;
     height: 2em;
     border: 0px;
