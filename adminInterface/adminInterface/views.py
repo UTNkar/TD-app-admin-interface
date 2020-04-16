@@ -18,7 +18,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 def singIn(request):
-    request.session['signed_in'] = False
     return render(request, "signIn.html")
 
 @login_required
@@ -35,7 +34,7 @@ def postsign(request):
     user = authenticate(request, username=uname, password=passw)
     if user is not None:
         login(request, user)
-        return redirect('/postsign/start')
+        return redirect('/login/start')
     else:
         message = "invalid cerediantials"
         return redirect('/')
