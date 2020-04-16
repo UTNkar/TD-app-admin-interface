@@ -11,7 +11,7 @@ h1 {
     text-align: center;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
-    height: 2em;
+    height: 3em !important;
     margin-top: 0em;
     padding-top: 1em;
 }
@@ -39,7 +39,7 @@ h1 {
 }
 
 #username-box {
-    margin-top: 2em;
+    margin-top: 1em;
     text-align: center;
 }
 
