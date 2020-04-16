@@ -28,13 +28,13 @@ def page2(request):
 def start(request):
     return render(request, "welcome.html")
 
-def postsign(request):
+def login_user(request):
     uname = request.POST.get('username')
     passw = request.POST.get("pass")
     user = authenticate(request, username=uname, password=passw)
     if user is not None:
         login(request, user)
-        return redirect('/login/start')
+        return redirect('/start')
     else:
         message = "invalid cerediantials"
         return redirect('/')
