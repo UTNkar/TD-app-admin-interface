@@ -139,3 +139,5 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

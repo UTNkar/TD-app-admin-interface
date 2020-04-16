@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+#from django.contrib.sessions.backends.db import SessionStore
 
 
 config = {
@@ -16,14 +17,16 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
+db = firebase.database()
+
 def singIn(request):
     request.session['signed_in'] = False
     return render(request, "signIn.html")
 
 @login_required
-def page2(request):
-    return render(request, "page2.html")
+def events(request):
+    db.child("users").child("Joe")
+    return render(request, "events.html")
 
 @login_required
 def start(request):
@@ -35,6 +38,7 @@ def postsign(request):
     user = authenticate(request, username=uname, password=passw)
     if user is not None:
         login(request, user)
+
         return redirect('/postsign/start')
     else:
         message = "invalid cerediantials"

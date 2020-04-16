@@ -19,7 +19,7 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.singIn),
-    url(r'^postsign/page2',views.page2),
+    url(r'^postsign/events',views.events),
     url(r'^postsign/start',views.start),
     url(r'^postsign/',views.postsign),
 ]
