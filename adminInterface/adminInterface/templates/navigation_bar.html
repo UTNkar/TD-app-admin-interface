@@ -1,40 +1,21 @@
-{% load block_tags %}
 {% if msg %}
 
 <script>
     alert('{{msg}}')
 </script>
-{% endif %} {% load static %}
+{% endif %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/navigation-bar.css' %}">
-
+{% load block_tags %}
 <div class="sidenav">
-        <h1 id="#header-text">
-        Inloggad som <br />
-        {{request.user.first_name}} {{request.user.last_name}} 
-        </h1>
-
-        {% if 'start' in request.path%}
-            <a class="active" href="/start">Start</a>
-            <a href="/page2">Nåt annat</a>
-        {% elif 'page2' in request.path%}
-            <a href="/start">Start</a>
-            <a class="active" href="/page2">Nåt annat</a>
-        {%endif%}
-    
-    </div>
-
-{% comment %} <div class="sidenav">
     <h1 id="#header-text">
-        är här {{request.path}} {{links}}
+        Inloggad som <br />
+        {{request.user}}
     </h1>
-            {% for link in links%}
-            {{link}}
-                {% if link in request.path %}
-                    <a class="active" href="{{link}}">Nåt annat</a>
-                {% else %}
-                    <a href="{{link}}">Nåt annat</a>
-                {%endif%}
-            {% endfor %} 
-    
-</div> {% endcomment %}
+    {% for title,link in links.items %}
+        {% if link in request.path %}
+            <a class="active" href="{{link}}">{{title}}</a>
+        {% else %}
+            <a href="{{link}}">{{title}}</a>
+        {%endif%}
+    {% endfor %}
+</div> 
