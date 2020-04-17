@@ -28,4 +28,4 @@ jobs:
     - name: Run Tests
       run: |
         flake8 src
-        python manage.py test
+        src/manage.py test
