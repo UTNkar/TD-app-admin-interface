@@ -16,13 +16,16 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
+db = firebase.database()
+
 def singIn(request):
     return render(request, "signIn.html")
 
 @login_required
-def page2(request):
-    return render(request, "page2.html")
+def ticket_system(request):
+    users = db.child("event/klassfesttest").get()
+    print(users.val()) # {"Morty": {"name": "Mortimer 'Morty' Smith"}, "Rick": {"name": "Rick Sanchez"}}
+    return render(request, "ticket-system.html")
 
 @login_required
 def start(request):
