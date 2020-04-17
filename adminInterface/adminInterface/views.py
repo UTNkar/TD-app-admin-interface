@@ -39,5 +39,4 @@ def login_user(request):
         login(request, user)
         return redirect('/start')
     else:
-        message = "invalid cerediantials"
-        return redirect('/', {'msg': message})
+        return redirect('/')
