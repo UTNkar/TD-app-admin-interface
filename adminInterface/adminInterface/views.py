@@ -1,30 +1,25 @@
-import pyrebase
 import os
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+import firebase_admin
+from firebase_admin import firestore
 
-
-config = {
-'apiKey': os.environ.get("FIREBASE_APIKEY"),
-'authDomain': os.environ.get("FIREBASE_AUTHDOMAIN"),
-'databaseURL': os.environ.get("FIREBASE_DATABASEURL"),
-'projectId': os.environ.get("FIREBASE_PROJECTID"),
-'storageBucket': os.environ.get("FIREBASE_STORGAEBUCKET")
-}
-
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
+firebase_admin.initialize_app()
+db = firestore.client()
 
 def singIn(request):
     return render(request, "signIn.html")
 
 @login_required
 def ticket_system(request):
-    users = db.child("event/klassfesttest").get()
-    print(users.val()) # {"Morty": {"name": "Mortimer 'Morty' Smith"}, "Rick": {"name": "Rick Sanchez"}}
+    users_ref = db.collection(u'event')
+    docs = users_ref.stream()
+
+    for doc in docs:
+        print(u'{} => {}'.format(doc.id, doc.to_dict()))
     return render(request, "ticket-system.html")
 
 @login_required

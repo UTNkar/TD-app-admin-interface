@@ -1,2 +1,2 @@
 Django[argon2]==3.0.4
-Pyrebase==3.0.27
+firebase-admin==4.0.1
