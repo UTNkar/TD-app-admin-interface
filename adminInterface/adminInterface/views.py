@@ -1,4 +1,3 @@
-import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -7,6 +6,7 @@ from firebase_admin import firestore
 
 firebase_admin.initialize_app()
 db = firestore.client()
+
 
 def singIn(request):
     return render(request, "signIn.html")

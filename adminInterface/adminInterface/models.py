@@ -9,4 +9,5 @@
 #     disappear = models.DateTimeField(auto_now_add=True)
 #     form = models.CharField(max_length=30)
 #     release = models.DateTimeField(auto_now_add=True)
-#     who = models.ArrayField(Section.classes) # hur hämtar man en specifik från arrayen
+#     who = models.ArrayField(Section.classes)
+# # hur hämtar man en specifik från arrayen
