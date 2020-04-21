@@ -1,2 +1,8 @@
 Django[argon2]==3.0.4
 Pyrebase==3.0.27
+
+# Postgres
+psycopg2-binary==2.8.5
+
+# Logging to sentry
+sentry-sdk==0.14.3
