@@ -10,9 +10,10 @@
 7. Run `pip install --upgrade pip` to make sure that pip is running the latest version
 8. Run `pip install -r dev-requirements.txt`
 9. Use `cd adminInterface` to enter the website directory
-10. Run `./manage.py migrate` to setup the database structure
-11. Run `./manage.py createsuperuser` to add a new admin user
-12. Run `./manage.py runserver` to start your local server
+10. Put the firestore private key in this folder
+11. Run `./manage.py migrate` to setup the database structure
+12. Run `./manage.py createsuperuser` to add a new admin user
+13. Run `./manage.py runserver` to start your local server
 
 You can now visit `localhost:8000` and login with the user created in the previous steps
 
