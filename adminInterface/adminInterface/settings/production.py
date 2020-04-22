@@ -28,7 +28,7 @@ SESSION_COOKIE_DOMAIN = '.utn.se'
 SESSION_COOKIE_SECURE = True
 
 sentry_sdk.init(
-    dsn="",
+    dsn=os.environ.get("SENTRY_DSN"),
     integrations=[DjangoIntegration()],
 
     # If you wish to associate users to errors (assuming you are using
