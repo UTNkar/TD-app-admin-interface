@@ -26,6 +26,9 @@ def ticket_system(request):
 def start(request):
     return render(request, "welcome.html")
 
+@login_required
+def sections(request):  
+    return render(request, "sections.html")
 
 def login_user(request):
     uname = request.POST.get('username')

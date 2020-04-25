@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^ticket-system/', views.ticket_system),
     url(r'^start/', views.start),
     url(r'^login/', views.login_user),
+    url(r'^sections/', views.sections)
 ]

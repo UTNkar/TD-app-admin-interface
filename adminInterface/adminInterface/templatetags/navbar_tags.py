@@ -8,7 +8,7 @@ def navigation_bar(context):
     # The links must have the title as the key and the link as the value
     links = {
         'Start': "/start",
-        'Nåt annat': "/page2"
+        'Sections': "/sections"
     }
     return {
         'links': links,
