@@ -1,7 +1,41 @@
-{% extends "base.html"%} {% block content %}
+{% extends "base.html"%} {% block content %}{% csrf_token %}
 
-<h1 id="#header-text">
-    Biljettsläpp {{email}} {{request.path}}
-</h1>
+<div id="header-text">
+    Biljettsläpp
+</div>
+
+<a id="create-event" href="new/">
+    Skapa nytt event
+</a>
+
+<div>
+    Aktuella evenemang
+</div>
+
+<div id="curr-events">
+
+    {% for event in events%}
+    <div id="cell">
+        <div id="event-name">
+            {{event.name}}
+        </div>
+        <div id="event-link">
+            Länk: {{event.form}}
+        </div>
+        <div id="event-link">
+            Tas bort: {{event.disappear}}
+        </div>
+        <div id="event-link">
+            Datum & tid: {{event.release}}
+        </div>
+        <div id="event-link">
+            Vilka: 
+            {%for class in event.who%} 
+            {{class}}, 
+            {% endfor %}
+        </div> 
+    </div>
+    {% endfor %}
+</div>
 
 {%endblock%}
