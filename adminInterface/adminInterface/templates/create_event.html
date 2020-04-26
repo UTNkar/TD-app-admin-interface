@@ -6,6 +6,7 @@
 <div>
     <form method="POST" action="{% url 'create_event' %}" class="event-form">
         {% csrf_token %}
+        {{form.firebase_id}}
         <div id="event-form-box">
             <div id="new-event">
                 Nytt event
