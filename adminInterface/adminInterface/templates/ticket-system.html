@@ -4,7 +4,7 @@
     Biljettsläpp
 </div>
 
-<a id="create-event" href="new/">
+<a id="create-event" href="new-event/">
     Skapa nytt event
 </a>
 
@@ -12,16 +12,14 @@
     Aktuella evenemang
 </div>
 
-<div id="curr-events">
-
-    {% for event in events%}
-    <div id="cell">
+{% for event in events%}
+<div id="all-events-boxes">
+    <div id="curr-events">
         <div id="event-name">
             {{event.name}}
         </div>
         <div id="event-link">
             Länk: {{event.form}}
-        </div>
         <div id="event-link">
             Tas bort: {{event.disappear}}
         </div>
@@ -34,8 +32,13 @@
             {{class}}, 
             {% endfor %}
         </div> 
+        <div id="edit-button">
+            <a id="edit-link" href="/ticket-system/edit-event/{{event.name}}" > 
+                Redigera
+            </a>
+        </div>
     </div>
-    {% endfor %}
 </div>
+{% endfor %}
 
 {%endblock%}
