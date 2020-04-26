@@ -1,17 +1,18 @@
-{% load navbar_tags %}
-{% if msg %}
+{% load navbar_tags %} {% if msg %}
 <script>
     alert('{{msg}}')
 </script>
 {% endif %} {% load static %}
 
-<html lang="en"> 
+<html lang="en">
 
 {% include "header.html" %}
 
 <body>
 
-    {% navigation_bar %}
+    <div id="nav-bar">
+        {% navigation_bar %}
+    </div>
 
     <div class="main">
         {% block content%}{% endblock %}
