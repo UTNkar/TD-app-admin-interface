@@ -23,30 +23,27 @@ def create_event(request):
 
 
 @login_required
-def edit_event(request, name):
+def edit_event(request, id):
     db = Firestore.get_instance()
-    event_ref = db.collection(u'event').document(name)
-    e = event_ref.get()
-    print(e)
-    doc_fields = e.to_dict()
-    print(doc_fields)
-    event = Event(
-            name=e.id,
+    event_ref = db.collection(u'event').document(id)
+    event = event_ref.get()
+    doc_fields = event.to_dict()
+    event_object = Event(
+            firebase_id=id,
+            name=doc_fields.get('name'),
             disappear=doc_fields.get('disappear'),
             form=doc_fields.get('form'),
             release=doc_fields.get('release'),
             who=doc_fields.get('who')
         )
-    form = EventForm(request.POST, instance=event)
+    form = EventForm(request.POST, instance=event_object)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             return redirect('ticket-system/')
     else:
-        form = EventForm(instance=event)
+        form = EventForm(instance=event_object)
     return render(request, 'create_event.html', {'form': form})
-
-
 
 
 @login_required
@@ -59,7 +56,8 @@ def ticket_system(request):
     for doc in docs:
         doc_fields = doc.to_dict()
         event = Event(
-            name=doc.id,
+            firebase_id=doc.id,
+            name=doc_fields.get('name'),
             disappear=doc_fields.get('disappear'),
             form=doc_fields.get('form'),
             release=doc_fields.get('release'),

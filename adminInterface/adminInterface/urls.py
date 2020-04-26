@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.singIn),
     url(r'ticket-system/new-event', views.create_event, name='create_event'),
-    url(r'ticket-system/edit-event/(?P<name>\w+)', views.edit_event),
+    url(r'ticket-system/edit-event/(?P<id>\w+)', views.edit_event),
     url(r'^ticket-system/', views.ticket_system),
     url(r'^start/', views.start),
     url(r'^login/', views.login_user),
