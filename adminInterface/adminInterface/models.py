@@ -1,13 +1,23 @@
-# from django.db import models
-# from django.contrib.postgres.fields import ArrayField
-# from django.forms.fields import CharField
+from django.db import models
+from multiselectfield import MultiSelectField
+
 
 # class Section(models.Model):
 #     classes = models.ArrayField(ArrayField(CharField(max_length=30)))
 
-# class Event(models.Model):
-#     disappear = models.DateTimeField(auto_now_add=True)
-#     form = models.CharField(max_length=30)
-#     release = models.DateTimeField(auto_now_add=True)
-#     who = models.ArrayField(Section.classes)
-# # hur hämtar man en specifik från arrayen
+
+# lägg till alla klasser
+CLASS_CHOICES = [
+    ('IT1a', 'IT1a'),
+    ('IT1b', 'IT1b'),
+    ('IT1c', 'IT1c'),
+]
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=30)
+    disappear = models.DateTimeField(editable=True)
+    form = models.CharField(max_length=30)
+    release = models.DateTimeField(editable=True)
+    who = MultiSelectField(choices=CLASS_CHOICES)
+
