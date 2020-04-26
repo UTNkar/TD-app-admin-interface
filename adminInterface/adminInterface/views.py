@@ -16,17 +16,44 @@ def create_event(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('create_event')
+            return redirect('ticket-system/')
     else:
         form = EventForm()
     return render(request, 'create_event.html', {'form': form})
 
 
 @login_required
+def edit_event(request, name):
+    db = Firestore.get_instance()
+    event_ref = db.collection(u'event').document(name)
+    e = event_ref.get()
+    print(e)
+    doc_fields = e.to_dict()
+    print(doc_fields)
+    event = Event(
+            name=e.id,
+            disappear=doc_fields.get('disappear'),
+            form=doc_fields.get('form'),
+            release=doc_fields.get('release'),
+            who=doc_fields.get('who')
+        )
+    form = EventForm(request.POST, instance=event)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('ticket-system/')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'create_event.html', {'form': form})
+
+
+
+
+@login_required
 def ticket_system(request):
     db = Firestore.get_instance()
-    users_ref = db.collection(u'event')
-    docs = users_ref.stream()
+    events_ref = db.collection(u'event')
+    docs = events_ref.stream()
     events = []
 
     for doc in docs:
