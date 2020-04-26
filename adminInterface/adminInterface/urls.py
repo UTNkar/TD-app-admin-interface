@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url
 from . import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.singIn),
+    url(r'ticket-system/new', views.create_event, name='create_event'),
     url(r'^ticket-system/', views.ticket_system),
     url(r'^start/', views.start),
     url(r'^login/', views.login_user),
