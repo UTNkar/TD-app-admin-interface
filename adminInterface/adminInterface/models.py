@@ -15,9 +15,9 @@ CLASS_CHOICES = [
 
 
 class Event(models.Model):
+    firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
     form = models.CharField(max_length=30)
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=CLASS_CHOICES)
-
