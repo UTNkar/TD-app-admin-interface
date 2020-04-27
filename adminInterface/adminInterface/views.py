@@ -43,7 +43,8 @@ def edit_event(request, id):
             return redirect('ticket-system/')
     else:
         form = EventForm(instance=event_object)
-    return render(request, 'create_event.html', {'form': form})
+    return render(request, 'create_event.html', {'form': form,
+                                                 'edit_event': True})
 
 
 @login_required
