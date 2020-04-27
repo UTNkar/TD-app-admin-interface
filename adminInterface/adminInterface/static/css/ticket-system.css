@@ -15,7 +15,7 @@
     border-top-right-radius: 1em;
 }
 
-#curr-events {
+.curr-events {
     background-color: #342A3B;
     color: white;
     width: 20em;
@@ -26,7 +26,7 @@
     border-radius: 1.5em;
 }
 
-#all-events-boxes {
+.all-events-boxes {
     background-color: #342A3B;
     color: white;
     width: 20em;
@@ -34,7 +34,7 @@
     border-radius: 1.5em;
 }
 
-#event-name {
+.event-name {
     color: #FF71FF;
     font-size: 1.5em;
     border-top-left-radius: 1em;
@@ -43,7 +43,7 @@
     padding-top: 1em;
 }
 
-#edit-button {
+.edit-button {
     background-color: #FF71FF;
     color: white;
     width: 6em;
@@ -54,7 +54,7 @@
     margin-top: 2em;
 }
 
-#edit-link {
+.edit-link {
     text-decoration: none !important;
     color: white;
     padding-left: 0.8em;

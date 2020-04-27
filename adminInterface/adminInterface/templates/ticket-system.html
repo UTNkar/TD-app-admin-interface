@@ -1,4 +1,4 @@
-{% extends "base.html"%} {% block content %}{% csrf_token %}
+{% extends "base.html"%} {% block content %}
 
 <div id="header-text">
     Biljettsläpp
@@ -13,27 +13,27 @@
 </div>
 
 {% for event in events%}
-<div id="all-events-boxes">
-    <div id="curr-events">
-        <div id="event-name">
+<div class="all-events-boxes">
+    <div class="curr-events">
+        <div class="event-name">
             {{event.name}}
         </div>
-        <div id="event-link">
+        <div class="event-section">
             Länk: {{event.form}}
-        <div id="event-link">
+        <div class="event-section">
             Tas bort: {{event.disappear}}
         </div>
-        <div id="event-link">
+        <div class="event-section">
             Datum & tid: {{event.release}}
         </div>
-        <div id="event-link">
+        <div class="event-section">
             Vilka: 
             {%for class in event.who%} 
             {{class}}, 
             {% endfor %}
         </div> 
-        <div id="edit-button">
-            <a id="edit-link" href="/ticket-system/edit-event/{{event.firebase_id}}" > 
+        <div class="edit-button">
+            <a class="edit-link" href="/ticket-system/edit-event/{{event.firebase_id}}" > 
                 Redigera
             </a>
         </div>
