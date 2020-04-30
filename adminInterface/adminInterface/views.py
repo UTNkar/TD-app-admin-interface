@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-import firebase_admin
-from firebase_admin import firestore
 from adminInterface.utils import Firestore
 from adminInterface.models import Section
+from adminInterface.forms import SectionForm
 
 
 
@@ -37,12 +36,36 @@ def sections(request):
     for doc in classes_docs:
         doc_fields = doc.to_dict()
         section = Section(
+            firebase_id=doc.id,
             sectionName=doc_fields.get('sectionName'),
             sectionFullName=doc_fields.get('sectionFullName')
         )
         sections.append(section)
 
     return render(request, "sections.html", {"sections": sections})
+
+
+@login_required
+def edit_section(request, id):
+    db = Firestore.get_instance()
+    section_ref = db.collection('sections').document(id)
+    section = section_ref.get()
+    sec = section.to_dict()
+
+    s = Section(
+        firebase_id=id,
+        sectionName=sec.get('sectionName'),
+        sectionFullName=sec.get('sectionFullName')
+    )
+    sec_form = SectionForm(request.POST, instance=s)
+    if request.method == 'POST':
+        if sec_form.is_valid():
+            sec_form.save()
+            return redirect('/sections')
+
+    else:
+        sec_form = SectionForm(instance=s)
+    return render(request, 'edit_section.html', {"form": sec_form})
 
 
 def login_user(request):

@@ -14,7 +14,7 @@
                 långnamn: {{section.sectionFullName}}
             </div>
             <div class="edit-button">
-                <a class="edit-link" href="/ticket-system/edit-event/{{event.firebase_id}}" > 
+                <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}" > 
                     Redigera
                 </a>
             </div>
