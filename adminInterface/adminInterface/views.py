@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 import firebase_admin
 from firebase_admin import firestore
 from adminInterface.utils import Firestore
+from adminInterface.models import Section
 
 
 
@@ -35,9 +36,12 @@ def sections(request):
 
     for doc in classes_docs:
         doc_fields = doc.to_dict()
-        sections.append(doc_fields)
-       
-    print(sections)
+        section = Section(
+            sectionName=doc_fields.get('sectionName'),
+            sectionFullName=doc_fields.get('sectionFullName')
+        )
+        sections.append(section)
+
     return render(request, "sections.html", {"sections": sections})
 
 
