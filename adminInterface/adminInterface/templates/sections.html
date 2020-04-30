@@ -1,12 +1,24 @@
 {% extends "base.html"%}
 
 {% block content %}
-<h1 id="#header-text">
-    Sections
-</h1>
-<ul class="main">
+    <h1 id="#header-text">
+        Sections
+    </h1>
     {% for section in sections %}
-    <li> My section is {{ section.sectionName }} </li>
+    <div class="all-events-boxes">
+        <div class="curr-events">
+            <div class="event-name">
+                {{section.sectionName}}
+            </div>
+            <div class="event-section">
+                långnamn: {{section.sectionFullName}}
+            </div>
+            <div class="edit-button">
+                <a class="edit-link" href="/ticket-system/edit-event/{{event.firebase_id}}" > 
+                    Redigera
+                </a>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</ul>
 {%endblock%}
