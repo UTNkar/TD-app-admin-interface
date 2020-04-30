@@ -1,7 +1,12 @@
-{% extends "base.html"%} {% block content %}
+{% extends "base.html"%}
 
+{% block content %}
 <h1 id="#header-text">
     Sections
 </h1>
-
+<ul class="main">
+    {% for section in sections %}
+    <li> My section is {{ section.sectionName }} </li>
+    {% endfor %}
+</ul>
 {%endblock%}

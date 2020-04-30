@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 import firebase_admin
 from firebase_admin import firestore
+from adminInterface.utils import Firestore
 
 
 
@@ -24,9 +25,21 @@ def ticket_system(request):
 def start(request):
     return render(request, "welcome.html")
 
+
 @login_required
-def sections(request):  
-    return render(request, "sections.html")
+def sections(request):
+    db = Firestore.get_instance()
+    section_ref = db.collection('sections')
+    classes_docs = section_ref.stream()
+    sections = []
+
+    for doc in classes_docs:
+        doc_fields = doc.to_dict()
+        sections.append(doc_fields)
+       
+    print(sections)
+    return render(request, "sections.html", {"sections": sections})
+
 
 def login_user(request):
     uname = request.POST.get('username')
