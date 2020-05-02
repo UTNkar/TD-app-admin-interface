@@ -18,15 +18,16 @@
         <div class="event-name">
             {{event.name}}
         </div>
-        <div class="event-section">
+        <div>
             Länk: {{event.form}}
-        <div class="event-section">
+        </div>
+        <div>
             Tas bort: {{event.disappear}}
         </div>
-        <div class="event-section">
+        <div> 
             Datum & tid: {{event.release}}
         </div>
-        <div class="event-section">
+        <div>
             Vilka: 
             {%for class in event.who%} 
             {{class}}, 

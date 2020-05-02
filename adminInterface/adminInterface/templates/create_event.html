@@ -8,15 +8,13 @@
         {% csrf_token %}
         {{form.firebase_id}}
         <div id="event-form-box">
-            {% if edit_event == True %}
                 <div id="new-event">
+                    {% if edit_event == True %}
                     Ändra event
-                </div>
-            {% else %}
-                <div id="new-event">
+                    {% else %}
                     Nytt event
+                    {% endif %}
                 </div>
-            {% endif %}
             <div id="table-row-1">
                 <div id="col-1">
                     Eventnamn <br> {{ form.name }}
@@ -44,19 +42,15 @@
             <div id="table-row-4">
             </div>
             <button id="submit-button" type="submit" class="save btn btn-default">
-            {% if edit_event == True %}
                 <div id="new-event">
                 <button id="submit-button" type="submit" class="save btn btn-default">
+                    {% if edit_event == True %}
                     Spara ändringar
-                </button>
-                </div>
-            {% else %}
-                <div id="new-event">
-                    <button id="submit-button" type="submit" class="save btn btn-default">
+                    {%else%}
                     Spara
+                    {% endif %}
                 </button>
-                </div>
-            {% endif %}
+                </div>>            
             </button>
         </div>
     </form>
