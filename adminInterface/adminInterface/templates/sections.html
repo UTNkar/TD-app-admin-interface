@@ -4,6 +4,11 @@
     <h1 id="#header-text">
         Sections
     </h1>
+
+    <a id="new-event" href="{% url 'create_section'  %}">
+        Skapa ny sektion
+    </a>
+
     {% for section in sections %}
     <div class="all-events-boxes">
         <div class="curr-events">

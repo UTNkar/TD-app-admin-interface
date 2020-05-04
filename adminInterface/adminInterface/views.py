@@ -46,6 +46,19 @@ def sections(request):
 
 
 @login_required
+def create_section(request):
+    if request.method == 'POST':
+        sec_form = SectionForm(request.POST)
+        if sec_form.is_valid():
+            sec_form.save()
+            return redirect('/sections')
+
+    else:
+        sec_form = SectionForm()
+    return render(request, 'create_section.html', {"form": sec_form})
+
+
+@login_required
 def edit_section(request, id):
     db = Firestore.get_instance()
     section_ref = db.collection('sections').document(id)

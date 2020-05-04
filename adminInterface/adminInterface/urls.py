@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^start/', views.start),
     url(r'^login/', views.login_user),
     path('sections/', views.sections),
-    path('sections/edit/<id>', views.edit_section, name='edit_section')
+    path('sections/edit/<id>', views.edit_section, name='edit_section'),
+    path('sections/create/', views.create_section, name='create_section')
 ]
