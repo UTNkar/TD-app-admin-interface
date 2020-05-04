@@ -5,10 +5,12 @@ from django import forms
 
 
 class SectionForm(ModelForm):
+
+    firebase_id = forms.CharField(required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = Section
         fields = ['firebase_id', 'sectionName', 'sectionFullName']
-        widgets = {'firebase_id': forms.HiddenInput()}
 
     def save(self):
         data = self.cleaned_data
