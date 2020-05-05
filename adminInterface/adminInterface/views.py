@@ -11,12 +11,20 @@ def singIn(request):
 
 
 @login_required
+def delete_event(request, id):
+    db = Firestore.get_instance()
+    event_ref = db.collection(u'event').document(id)
+    event_ref.delete()
+    return redirect('/ticket-system/')
+
+
+@login_required
 def create_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('ticket-system/')
+            return redirect('/ticket-system/')
     else:
         form = EventForm()
     return render(request, 'create_event.html', {'form': form})
