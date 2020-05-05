@@ -25,6 +25,11 @@ class EventForm(ModelForm):
         )
     )
 
+    firebase_id = forms.CharField(
+        widget=forms.HiddenInput(),
+        required=False
+    )
+
     class Meta:
         model = Event
         fields = ['firebase_id',
@@ -33,9 +38,6 @@ class EventForm(ModelForm):
                   'form',
                   'release',
                   'who']
-        widgets = {
-            'firebase_id': forms.HiddenInput(),
-        }
 
     def save(self):
         data = self.cleaned_data
