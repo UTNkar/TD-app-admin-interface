@@ -14,15 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.singIn),
-    url(r'ticket-system/new-event', views.create_event, name='create_event'),
-    url(r'ticket-system/edit-event/(?P<id>\w+)', views.edit_event),
-    url(r'^ticket-system/', views.ticket_system),
-    url(r'^start/', views.start),
-    url(r'^login/', views.login_user),
+    path('admin/', admin.site.urls),
+    path('', views.singIn),
+    path(
+        'ticket-system/delete-event/<id>',
+        views.delete_event,
+        name='delete_event'
+    ),
+    path('ticket-system/new-event/', views.create_event, name='create_event'),
+    path(
+        'ticket-system/edit-event/<id>',
+        views.edit_event,
+        name="edit_event"
+    ),
+    path('ticket-system/', views.ticket_system),
+    path('start/', views.start),
+    path('login/', views.login_user),
 ]
