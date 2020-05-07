@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'multiselectfield'
 ]
 
 MIDDLEWARE = [
@@ -112,4 +113,8 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+DATETIME_INPUT_FORMATS = [
+    '%Y-%m-%d %H:%M'
 ]

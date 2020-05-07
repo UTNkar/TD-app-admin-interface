@@ -1,6 +1,7 @@
 @import url('https://rsms.me/inter/inter.css');
 body {
-    background-image: url(../images/byt-bild-sen.jpg);
+    background-image: url(../images/stars.png);
+    background-size: 100%;
     color: #FF71FF;
     font-family: 'Inter';
 }
