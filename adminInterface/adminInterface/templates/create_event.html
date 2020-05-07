@@ -42,9 +42,8 @@
             </div>
             <div id="table-row-4">
             </div>
-            <button id="submit-button" type="submit" class="save btn btn-default">
                 <div id="new-event">
-                <button id="submit-button" type="submit" class="save btn btn-default">
+                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
                     {% if edit_event == True %}
                     Spara ändringar
                     {%else%}
@@ -52,8 +51,19 @@
                     {% endif %}
                 </button>
                 </div>            
-            </button>
         </div>
     </form>
 </div>
+
+<script>
+function saveAlert() {
+    {% if edit_event == True %}
+    message = 'Vill du spara ändringarna?'
+    {%else%}
+    message = 'Vill du spara eventet?'
+    {% endif %}
+    return confirm(message)
+}
+</script>
+
 {% endblock %}
