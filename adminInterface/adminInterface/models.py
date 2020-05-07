@@ -21,5 +21,3 @@ class Event(models.Model):
     form = models.CharField(max_length=30)
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=CLASS_CHOICES)
-
-
