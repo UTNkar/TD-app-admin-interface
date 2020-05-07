@@ -9,7 +9,7 @@
         {{form.firebase_id}}
         <div id="event-form-box">
                 <div id="new-event">
-                    {% if edit_event == True %}
+                    {% if edit_event %}
                     Ändra event
                     {% else %}
                     Nytt event
@@ -44,7 +44,7 @@
             </div>
                 <div id="new-event">
                 <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event == True %}
+                    {% if edit_event %}
                     Spara ändringar
                     {%else%}
                     Spara
@@ -57,7 +57,7 @@
 
 <script>
 function saveAlert() {
-    {% if edit_event == True %}
+    {% if edit_event %}
     message = 'Vill du spara ändringarna?'
     {%else%}
     message = 'Vill du spara eventet?'
