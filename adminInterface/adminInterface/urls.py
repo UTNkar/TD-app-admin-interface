@@ -33,6 +33,7 @@ urlpatterns = [
         name="edit_event"
     ),
     path('ticket-system/', views.ticket_system),
+    path('notifications/', views.notifications),
     path('start/', views.start),
     path('login/', views.login_user),
 ]

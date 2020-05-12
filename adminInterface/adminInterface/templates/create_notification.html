@@ -1,0 +1,51 @@
+{% extends "base.html"%} {% block content %}
+
+<div id="header-text">
+    Biljettsläpp
+</div>
+<div>
+    <form method="POST" action="{% url 'create_event' %}" class="event-form">
+        {% csrf_token %}
+        {{form.firebase_id}}
+        <div id="event-form-box">
+                <div id="new-event">
+                    Ändra event
+                </div>
+                {{form.errors}}
+            <div id="table-row-1">
+                <div id="col-1">
+                    Eventnamn <br> {{ form.name }}
+                </div>
+                <div id="col-2">
+                    Releasedatum och tid <br> {{ form.release }}
+                </div>
+            </div>
+
+            <div id="table-row-2">
+                <div id="col-1">
+                    Anmälningslänk <br> {{ form.form }}
+                </div>
+
+                <div id="col-2">
+                    Disappear (vad är detta) <br> {{ form.disappear }}
+                </div>
+            </div>
+
+            <div id="table-row-3">
+                <div id="col-1">
+                    Vilka <br> {{ form.who }}
+                </div>
+            </div>
+            <div id="table-row-4">
+            </div>
+                <div id="new-event">
+                <button id="submit-button" type="submit" class="save btn btn-default">
+                    Spara ändringar
+                </button>
+                </div>            
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -11,6 +11,11 @@ def singIn(request):
 
 
 @login_required
+def notifications(request):
+    return render(request, "create_notification.html")
+
+
+@login_required
 def delete_event(request, id):
     db = Firestore.get_instance()
     event_ref = db.collection(u'event').document(id)
