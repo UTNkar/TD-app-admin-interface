@@ -1,9 +1,0 @@
-{% extends "base.html"%}
-
-{% block content %}
-<form method="POST" action="{% url 'edit_section' form.instance.firebase_id %}" class="event-form">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Submit">
-</form>
-{%endblock%}

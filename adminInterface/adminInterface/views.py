@@ -55,7 +55,7 @@ def create_section(request):
 
     else:
         sec_form = SectionForm()
-    return render(request, 'create_section.html', {"form": sec_form})
+    return render(request, 'create_section.html', {'form': sec_form})
 
 
 @login_required
@@ -78,7 +78,8 @@ def edit_section(request, id):
 
     else:
         sec_form = SectionForm(instance=s)
-    return render(request, 'edit_section.html', {"form": sec_form})
+    return render(request, 'create_section.html', {'form': sec_form,
+                                                   'edit_section': True})
 
 @login_required
 def delete_section(request, id):
