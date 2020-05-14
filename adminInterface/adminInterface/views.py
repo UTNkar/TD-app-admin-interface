@@ -80,6 +80,12 @@ def edit_section(request, id):
         sec_form = SectionForm(instance=s)
     return render(request, 'edit_section.html', {"form": sec_form})
 
+@login_required
+def delete_section(request, id):
+    db = Firestore.get_instance()
+    section_ref = db.collection('sections').document(id)
+    section_ref.delete()
+    return redirect ('/sections')
 
 def login_user(request):
     uname = request.POST.get('username')

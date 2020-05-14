@@ -8,7 +8,6 @@
     <a id="new-event" href="{% url 'create_section'  %}">
         Skapa ny sektion
     </a>
-
     {% for section in sections %}
     <div class="all-events-boxes">
         <div class="curr-events">
@@ -19,6 +18,11 @@
                 långnamn: {{section.sectionFullName}}
             </div>
             <div class="edit-button">
+                <a onclick="return deleteAlert()" class="edit-link" href = "{%url 'delete_section' section.firebase_id %}">
+                    Ta bort
+                </a>
+            </div>
+            <div class="edit-button">
                 <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}" > 
                     Redigera
                 </a>
@@ -26,4 +30,9 @@
         </div>
     </div>
     {% endfor %}
+    <script>
+        function deleteAlert() {
+            return confirm('Är du säker på att du vill ta bort sektionen?')
+        }
+    </script>
 {%endblock%}
