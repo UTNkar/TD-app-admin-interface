@@ -1,7 +1,56 @@
 {% extends "base.html"%} {% block content %}
 
-<h1 id="#header-text">
-    Biljettsläpp {{email}} {{request.path}}
-</h1>
+<div id="header-text">
+    Biljettsläpp
+</div>
+
+<a id="create-event" href="{% url 'create_event' %}">
+    Skapa nytt event
+</a>
+
+<div>
+    Aktuella evenemang
+</div>
+
+{% for event in events%}
+<div class="all-events-boxes">
+    <div class="curr-events">
+        <div class="event-name">
+            {{event.name}}
+        </div>
+        <div>
+            Länk: {{event.form}}
+        </div>
+        <div>
+            Tas bort: {{event.disappear}}
+        </div>
+        <div> 
+            Datum & tid: {{event.release}}
+        </div>
+        <div>
+            Vilka: 
+            {%for class in event.who%} 
+            {{class}}, 
+            {% endfor %}
+        </div> 
+        <div>
+            <a onclick="return deleteAlert()" href="{% url 'delete_event' event.firebase_id %}" class='btn btn-lg'>
+                Radera
+            </a>
+        </div>
+        <div class="edit-button">
+            <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}" > 
+                Redigera
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script>
+function deleteAlert() {
+    return confirm('Är du säker på att du vill ta bort eventet?')
+}
+</script>
 
 {%endblock%}

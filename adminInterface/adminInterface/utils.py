@@ -4,6 +4,7 @@ from firebase_admin import firestore
 
 class Firestore:
     dataBase = None
+
     @staticmethod
     def get_instance():
         if Firestore.dataBase is None:
