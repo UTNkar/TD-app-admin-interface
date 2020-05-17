@@ -1,0 +1,53 @@
+{% extends "base.html"%} {% block content %}
+
+<div id="header-text">
+    Sektioner
+</div>
+<div>
+    <form method="POST" action="{% url 'create_section' %}" class="event-form">
+        {% csrf_token %}
+        {{form.firebase_id}}
+        <div id="event-form-box">
+                <div id="new-event">
+                    {% if edit_section %}
+                    Ändra sektion
+                    {% else %}
+                    Ny sektion
+                    {% endif %}
+                </div>
+                {{form.errors}}
+            <div id="table-row-1">
+                <div id="col-1">
+                    Sektionsnamn <br> {{ form.sectionName }}
+                </div>
+                <div id="col-2">
+                    Hela sektionsnamnet <br> {{ form.sectionFullName }}
+                </div>
+            </div>
+            </div>
+                <div id="new-event">
+                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                    {% if edit_event %}
+                    Spara ändringar
+                    {%else%}
+                    Spara
+                    {% endif %}
+                </button>
+                </div>   
+            </div>         
+        </div>
+    </form>
+</div>
+
+<script>
+function saveAlert() {
+    {% if edit_section %}
+    message = 'Vill du spara ändringarna?'
+    {%else%}
+    message = 'Vill du skapa sektionen?'
+    {% endif %}
+    return confirm(message)
+}
+</script>
+
+{% endblock %}

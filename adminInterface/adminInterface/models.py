@@ -2,8 +2,11 @@ from django.db import models
 from multiselectfield import MultiSelectField
 
 
-# class Section(models.Model):
-#     classes = models.ArrayField(ArrayField(CharField(max_length=30)))
+class Section(models.Model):
+    firebase_id = models.CharField(max_length=60)
+    sectionName = models.CharField(max_length=5)
+    sectionFullName = models.CharField(max_length=60)
+    classes = []
 
 
 # lägg till alla klasser

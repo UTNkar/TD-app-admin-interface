@@ -19,6 +19,10 @@ from . import views
 
 
 urlpatterns = [
+    path('sections/', views.sections),
+    path('sections/edit/<id>', views.edit_section, name='edit_section'),
+    path('sections/create/', views.create_section, name='create_section'),
+    path('sections/delete/<id>', views.delete_section, name='delete_section'),
     path('admin/', admin.site.urls),
     path('', views.singIn),
     path(
@@ -34,5 +38,5 @@ urlpatterns = [
     ),
     path('ticket-system/', views.ticket_system),
     path('start/', views.start),
-    path('login/', views.login_user),
+    path('login/', views.login_user)
 ]
