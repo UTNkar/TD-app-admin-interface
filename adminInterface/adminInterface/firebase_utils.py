@@ -3,7 +3,7 @@ from firebase_admin import firestore
 from firebase_admin import messaging
 
 
-class Firebase:
+class Firebase():
     initialized = False
 
     @staticmethod
