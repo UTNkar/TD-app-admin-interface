@@ -25,12 +25,18 @@ class Section(models.Model):
                     class_name = section_class.get('className')
                     classes.append(class_name)
 
+        return classes
+
+    @staticmethod
+    def get_all_classes_tuple():
+        classes = Section.get_all_classes()
+        classes_tuple = []
+
         for class_name in classes:
             class_name_tuple = (str(class_name), str(class_name))
-            class_choices.append(class_name_tuple)
+            classes_tuple.append(class_name_tuple)
 
-        print(class_choices)
-        return class_choices
+        return classes_tuple
 
 
 class Event(models.Model):
@@ -39,4 +45,4 @@ class Event(models.Model):
     disappear = models.DateTimeField(editable=True)
     form = models.CharField(max_length=30)
     release = models.DateTimeField(editable=True)
-    who = MultiSelectField(choices=Section.get_all_classes())
+    who = MultiSelectField(choices=Section.get_all_classes_tuple())
