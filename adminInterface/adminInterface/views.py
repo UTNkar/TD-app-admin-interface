@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from adminInterface.models import Event
-from adminInterface.forms import EventForm
-from adminInterface.utils import Firestore
+from adminInterface.forms import EventForm, NotificationForm
+from adminInterface.firebase_utils import Firestore
 
 
 def singIn(request):
@@ -11,8 +11,15 @@ def singIn(request):
 
 
 @login_required
-def notifications(request):
-    return render(request, "create_notification.html")
+def create_notification(request):
+    if request.method == 'POST':
+        form = NotificationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/notifications/')
+    else:
+        form = NotificationForm()
+    return render(request, "create_notification.html", {'form': form})
 
 
 @login_required

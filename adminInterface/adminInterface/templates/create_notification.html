@@ -1,33 +1,32 @@
 {% extends "base.html"%} {% block content %}
 
 <div id="header-text">
-    Biljettsläpp
+    Notiser
 </div>
 <div>
-    <form method="POST" action="{% url 'create_event' %}" class="event-form">
+    <form method="POST" action="{% url 'create_notification' %}" class="event-form">
         {% csrf_token %}
-        {{form.firebase_id}}
         <div id="event-form-box">
                 <div id="new-event">
-                    Ändra event
+                    Skapa notis
                 </div>
                 {{form.errors}}
             <div id="table-row-1">
                 <div id="col-1">
-                    Eventnamn <br> {{ form.name }}
+                    Titel <br> {{ form.title }}
                 </div>
                 <div id="col-2">
-                    Releasedatum och tid <br> {{ form.release }}
+                    Meddelande <br> {{ form.body }}
                 </div>
             </div>
 
             <div id="table-row-2">
                 <div id="col-1">
-                    Anmälningslänk <br> {{ form.form }}
+                    Avsändare <br> {{ form.sender }}
                 </div>
 
                 <div id="col-2">
-                    Disappear (vad är detta) <br> {{ form.disappear }}
+                    Notification (vad är detta) <br> {{ form.notification }}
                 </div>
             </div>
 
@@ -36,10 +35,16 @@
                     Vilka <br> {{ form.who }}
                 </div>
             </div>
+            <div id="table-row-3">
+                <div id="col-1">
+                    senderDate <br> {{ form.senderDate }}
+                </div>
+            </div>
+
             <div id="table-row-4">
             </div>
                 <div id="new-event">
-                <button id="submit-button" type="submit" class="save btn btn-default">
+                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
                     Spara ändringar
                 </button>
                 </div>            
@@ -47,5 +52,11 @@
     </form>
 </div>
 
+<script>
+function saveAlert() {
+    message = 'Vill du spara notisen?'
+    return confirm(message)
+}
+</script>
 
 {% endblock %}

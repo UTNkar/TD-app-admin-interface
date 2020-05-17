@@ -1,7 +1,8 @@
 from django.forms import ModelForm
-from adminInterface.models import Event
+from adminInterface.models import Event, Notification
 from django import forms
-from adminInterface.utils import Firestore
+from adminInterface.firebase_utils import Firestore
+from adminInterface.firebase_utils import CloudMessaging
 
 
 class EventForm(ModelForm):
@@ -55,3 +56,47 @@ class EventForm(ModelForm):
             u'who': data.get('who')
         })
         return data
+
+
+class NotificationForm(ModelForm):
+    senderDate = forms.DateTimeField(
+        input_formats=['%Y-%m-%dT%H:%M'],
+        widget=forms.DateTimeInput(
+            attrs={
+                'type': 'datetime-local',
+                'class': 'form-control'},
+            format='%Y-%m-%dT%H:%M'
+        )
+    )
+
+    class Meta:
+        model = Notification
+        fields = ['title',
+                  'body',
+                  'sender',
+                  'senderDate',
+                  'notification',
+                  'who'
+                  ]
+
+    def save(self):
+        data = self.cleaned_data
+        messaging = CloudMessaging.get_instance()
+        topic = 'highScores'
+        # condition = "'stock-GOOG' in topics || 'industry-tech' in topics"
+
+        # See documentation on defining a message payload.
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=data.get('title'),
+                body=data.get('body'),
+            ),
+            # condition=condition,
+            topic=topic
+        )
+
+        # Send a message to devices subscribed to the combination of topics
+        # specified by the provided condition.
+        response = messaging.send(message)
+        # Response is a message ID string.
+        print('Successfully sent message:', response)

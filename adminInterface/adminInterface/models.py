@@ -21,3 +21,18 @@ class Event(models.Model):
     form = models.CharField(max_length=30)
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=CLASS_CHOICES)
+
+
+class Notification(models.Model):
+    SENDER_CHOICES = [
+        ('Rekå', 'Rekå'),
+        ('Fadderkå', 'Fadderkå'),
+        ('Mediakå', 'Mediakå'),
+        ('UTN', 'UTN'),
+    ]
+    title = models.CharField(max_length=30)
+    body = models.CharField(max_length=300)
+    sender = models.CharField(max_length=8, choices=SENDER_CHOICES)
+    senderDate = models.DateTimeField(editable=True)
+    notification = models.CharField(max_length=30)
+    who = MultiSelectField(choices=CLASS_CHOICES)
