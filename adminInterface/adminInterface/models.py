@@ -15,7 +15,6 @@ class Section(models.Model):
         section_ref = db.collection('sections')
         docs = section_ref.stream()
         classes = []
-        class_choices = []
 
         for section in docs:
             section_fields = section.to_dict()
