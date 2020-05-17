@@ -7,7 +7,11 @@ from adminInterface.utils import Firestore
 
 
 def singIn(request):
-    return render(request, "signIn.html")
+    current_user = request.user
+    if current_user.is_authenticated:
+        return redirect('/start')
+    else:
+        return render(request, "signIn.html")
 
 
 @login_required
