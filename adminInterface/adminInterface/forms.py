@@ -1,8 +1,30 @@
 from django.forms import ModelForm
-from adminInterface.models import Event, Notification
+from adminInterface.models import Event, Notification, Section
 from django import forms
-from adminInterface.firebase_utils import Firestore
-from adminInterface.firebase_utils import CloudMessaging
+from adminInterface.firebase_utils import Firestore, CloudMessaging
+
+
+class SectionForm(ModelForm):
+
+    firebase_id = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    class Meta:
+        model = Section
+        fields = ['firebase_id', 'sectionName', 'sectionFullName']
+
+    def save(self):
+        data = self.cleaned_data
+        db = Firestore.get_instance()
+        id = data.get('firebase_id')
+        if id:
+            doc_ref = db.collection(u'sections').document(id)
+        else:
+            doc_ref = db.collection(u'sections').document()
+        doc_ref.set({
+            u'sectionName': data.get('sectionName'),
+            u'sectionFullName': data.get('sectionFullName')
+        })
+        return data
 
 
 class EventForm(ModelForm):

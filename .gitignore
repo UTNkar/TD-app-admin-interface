@@ -131,3 +131,4 @@ dmypy.json
 .vscode/
 
 admininterface-privatekey.json
+.DS_Store

@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+
+{% block content %}
+    <h1 id="#header-text">
+        Sektioner
+    </h1>
+    <a href="{% url 'create_section'  %}">
+        Skapa ny sektion
+    </a>
+    {% for section in sections %}
+    <div class="all-events-boxes">
+        <div class="curr-events">
+            <div class="event-name">
+                {{section.sectionName}}
+            </div>
+            <div class="event-section">
+                långnamn: {{section.sectionFullName}}
+            </div>
+            <div class="edit-button">
+                <a onclick="return deleteAlert()" class="edit-link" href = "{%url 'delete_section' section.firebase_id %}">
+                    Ta bort
+                </a>
+            </div>
+            <div class="edit-button">
+                <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}" > 
+                    Redigera
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <script>
+        function deleteAlert() {
+            return confirm('Är du säker på att du vill ta bort sektionen?')
+        }
+    </script>
+{%endblock%}
