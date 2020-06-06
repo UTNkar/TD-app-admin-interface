@@ -1,5 +1,7 @@
 body {
     font-family: 'Inter';
+    margin: 0;
+    display: flex;
 }
 
 h1 {
@@ -7,13 +9,4 @@ h1 {
     color: white;
     font-size: 1em;
     text-align: center;
-    height: 5em;
-    margin-top: 0em;
-    padding-top: 1em;
-}
-
-.main {
-    margin-left: 15em;
-    /* Same as the width of the sidebar */
-    padding: 0px 10px;
 }

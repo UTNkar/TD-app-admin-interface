@@ -9,14 +9,10 @@
 {% include "header.html" %}
 
 <body>
-
-    <div id="nav-bar">
-        {% navigation_bar %}
-    </div>
-
-    <div class="main">
+    {% navigation_bar %}
+    <main>
         {% block content%}{% endblock %}
-    </div>
+    </main>
 </body>
 
 </html>
