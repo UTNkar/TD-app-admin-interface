@@ -1,6 +1,6 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-from adminInterface.utils import Firestore
+from adminInterface.firebase_utils import Firestore
 
 
 class Section(models.Model):
@@ -58,5 +58,4 @@ class Notification(models.Model):
     body = models.CharField(max_length=300)
     sender = models.CharField(max_length=8, choices=SENDER_CHOICES)
     senderDate = models.DateTimeField(editable=True)
-    notification = models.CharField(max_length=30)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
