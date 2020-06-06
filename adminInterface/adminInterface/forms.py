@@ -97,28 +97,47 @@ class NotificationForm(ModelForm):
                   'body',
                   'sender',
                   'senderDate',
-                  'notification',
                   'who'
                   ]
 
     def save(self):
         data = self.cleaned_data
         messaging = CloudMessaging.get_instance()
-        topic = 'highScores'
-        # condition = "'stock-GOOG' in topics || 'industry-tech' in topics"
 
-        # See documentation on defining a message payload.
-        message = messaging.Message(
+        db = Firestore.get_instance()
+        section_ref = db.collection('users')
+        docs = section_ref.stream()
+
+        who = data.get('who')
+        registration_tokens = []
+
+        for user in docs:
+            user_fields = user.to_dict()
+            user_class_name = user_fields.get('userClass')
+            for who_class_name in who:
+                if who_class_name == user_class_name:
+                    token = user_fields.get('userToken')
+                    if len(token) > 0:
+                        registration_tokens.append(token)
+
+        # registration_tokens = [
+        #     'eet7DJ8Gp9U:APA91bFHoLv6LGKdEa4kT28dIfnEANRNECgkE2h-WDCFJ806zqF11ngSzKR14jJk8-19GEENDWwqnNKevwn-iTjlnCUcKBF5i6vOkCOMVT6A4rGIxbB7L4iVdPikPb-CNNWYZlI3WsHm',
+        # ]
+
+        message = messaging.MulticastMessage(
             notification=messaging.Notification(
                 title=data.get('title'),
                 body=data.get('body'),
             ),
-            # condition=condition,
-            topic=topic
+            data={
+                'title': data.get('title'),
+                'body': data.get('body'),
+                'sender': data.get('sender'),
+            },
+            tokens=registration_tokens,
         )
-
-        # Send a message to devices subscribed to the combination of topics
-        # specified by the provided condition.
-        response = messaging.send(message)
-        # Response is a message ID string.
-        print('Successfully sent message:', response)
+        response = messaging.send_multicast(message)
+        # See the BatchResponse reference documentation
+        # for the contents of response.
+        print('{0} messages were sent successfully'.format(response.
+                                                           success_count))
