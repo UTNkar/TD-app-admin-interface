@@ -21,24 +21,23 @@
         <div>
             Tas bort: {{event.disappear}}
         </div>
-        <div> 
+        <div>
             Datum & tid: {{event.release}}
         </div>
         <div>
-            Vilka: 
-            {%for class in event.who%} 
-            {{class}}, 
-            {% endfor %}
-        </div> 
-        <div class="edit-button">
-            <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_event' event.firebase_id %}">
-                Ta bort
-            </a>
+            Vilka: {%for class in event.who%} {{class}}, {% endfor %}
         </div>
-        <div class="edit-button">
-            <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}"> 
-                Redigera
-            </a>
+        <div class="buttons">
+            <div class="edit-button">
+                <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_event' event.firebase_id %}">
+                    Ta bort
+                </a>
+            </div>
+            <div class="edit-button">
+                <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}"> 
+                    Redigera
+                </a>
+            </div>
         </div>
     </div>
 
@@ -46,9 +45,9 @@
 </div>
 
 <script>
-function deleteAlert() {
-    return confirm('Är du säker på att du vill ta bort eventet?')
-}
+    function deleteAlert() {
+        return confirm('Är du säker på att du vill ta bort eventet?')
+    }
 </script>
 
 {%endblock%}

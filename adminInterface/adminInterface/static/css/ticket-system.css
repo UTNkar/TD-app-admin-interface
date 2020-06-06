@@ -28,11 +28,10 @@
 .flex-container>* {
     color: white;
     background-color: #342A3B;
-    width: 15em;
-    height: 15em;
+    width: 16em;
+    height: 17em;
     margin: 1em;
     padding: 1.5em;
-    text-align: left;
     border-radius: 1.5em;
 }
 
@@ -52,16 +51,24 @@
 .event-name {
     color: #FF71FF;
     font-size: 2em;
-    height: 2em !important;
+    height: 2.5em !important;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
 }
 
 .edit-button {
     background-color: #FF71FF;
-    text-align: center;
     color: white;
     width: 6em;
     height: 2em;
     border-radius: 0.6em;
+    margin-top: .6em;
 }
 
 .edit-link {
