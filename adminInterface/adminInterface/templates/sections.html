@@ -16,9 +16,9 @@
             {{section.sectionName}}
         </div>
         <div class="event-section">
-            långnamn: {{section.sectionFullName}}
+            Långnamn: {{section.sectionFullName}}
         </div>
-        <div class="buttons">
+        <div class="buttons" id="sections-button">
             <div class="edit-button">
                 <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_section' section.firebase_id %}">
                             Ta bort
