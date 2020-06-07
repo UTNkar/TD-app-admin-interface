@@ -125,8 +125,9 @@ class NotificationForm(ModelForm):
                     if len(token) > 0:
                         registration_tokens.append(token)
 
+        # date without 0 / month without 0
         time_now = datetime.datetime.now()
-        senderDate = time_now.date() + "/" + time_now.month()
+        senderDate = time_now.strftime("%-d/%-m")
 
         message = messaging.MulticastMessage(
             notification=messaging.Notification(
