@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from adminInterface.models import Event, Notification, Section
 from django import forms
 from adminInterface.firebase_utils import Firestore, CloudMessaging
+import datetime
 
 
 class SectionForm(ModelForm):
@@ -81,16 +82,6 @@ class EventForm(ModelForm):
 
 
 class NotificationForm(ModelForm):
-    senderDate = forms.DateTimeField(
-        input_formats=['%Y-%m-%dT%H:%M'],
-        widget=forms.DateTimeInput(
-            attrs={
-                'type': 'datetime-local',
-                'class': 'form-control'},
-            format='%Y-%m-%dT%H:%M'
-        )
-    )
-
     class Meta:
         model = Notification
         fields = ['title',
@@ -120,9 +111,8 @@ class NotificationForm(ModelForm):
                     if len(token) > 0:
                         registration_tokens.append(token)
 
-        # registration_tokens = [
-        #     'eet7DJ8Gp9U:APA91bFHoLv6LGKdEa4kT28dIfnEANRNECgkE2h-WDCFJ806zqF11ngSzKR14jJk8-19GEENDWwqnNKevwn-iTjlnCUcKBF5i6vOkCOMVT6A4rGIxbB7L4iVdPikPb-CNNWYZlI3WsHm',
-        # ]
+        time_now = datetime.datetime.now()
+        senderDate = time_now.date() + "/" + time_now.month()
 
         message = messaging.MulticastMessage(
             notification=messaging.Notification(
@@ -133,6 +123,7 @@ class NotificationForm(ModelForm):
                 'title': data.get('title'),
                 'body': data.get('body'),
                 'sender': data.get('sender'),
+                'senderDate': senderDate
             },
             tokens=registration_tokens,
         )
