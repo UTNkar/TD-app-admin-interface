@@ -1,69 +1,64 @@
 {% extends "base.html"%} {% block content %}
-
-<div id="header-text">
+<header>
     Biljettsläpp
-</div>
-<div>
-    <form method="POST" action="{% url 'create_event' %}" class="event-form">
-        {% csrf_token %}
-        {{form.firebase_id}}
-        <div id="event-form-box">
-                <div id="new-event">
-                    {% if edit_event %}
-                    Ändra event
-                    {% else %}
-                    Nytt event
-                    {% endif %}
-                </div>
-                {{form.errors}}
-            <div id="table-row-1">
-                <div id="col-1">
-                    Eventnamn <br> {{ form.name }}
-                </div>
-                <div id="col-2">
-                    Releasedatum och tid <br> {{ form.release }}
-                </div>
-            </div>
+</header>
 
-            <div id="table-row-2">
-                <div id="col-1">
-                    Anmälningslänk <br> {{ form.form }}
-                </div>
-
-                <div id="col-2">
-                    Disappear (vad är detta) <br> {{ form.disappear }}
-                </div>
-            </div>
-
-            <div id="table-row-3">
-                <div id="col-1">
-                    Vilka <br> {{ form.who }}
-                </div>
-            </div>
-            <div id="table-row-4">
-            </div>
-                <div id="new-event">
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event %}
-                    Spara ändringar
-                    {%else%}
-                    Spara
-                    {% endif %}
-                </button>
-                </div>            
+<div id="flex-container">
+    <div>
+        <div id="new-event">
+            {% if edit_event %} Ändra event {% else %} Nytt event {% endif %}
         </div>
-    </form>
+        {{form.errors}}
+        <div id="flex-container-content-button">
+            <div id="flex-container-content">
+                <div>
+                    <div id="flex-container-content">
+                        <div id="content">
+                            Eventnamn <br> {{ form.name }}
+                        </div>
+                        <div id="content">
+                            Releasedatum och tid <br> {{ form.release }}
+                        </div>
+                    </div>
+                    <div id="flex-container-content">
+                        <div id="content">
+                            Anmälningslänk <br> {{ form.form }}
+                        </div>
+                        <div id="content">
+                            Disappear (vad är detta) <br> {{ form.disappear }}
+                        </div>
+                    </div>
+                </div>
+                <div id="flex-container-content">
+                    <div id="content">
+                        Vilka <br> {{ form.who }}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                        {% if edit_event %}
+                        Spara ändringar
+                        {%else%}
+                        Spara
+                        {% endif %}
+                    </button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
-function saveAlert() {
-    {% if edit_event %}
-    message = 'Vill du spara ändringarna?'
-    {%else%}
-    message = 'Vill du spara eventet?'
-    {% endif %}
-    return confirm(message)
-}
+    function saveAlert() {
+        {% if edit_event %}
+            message = 'Vill du spara ändringarna?' 
+        {% else %}
+            message = 'Vill du spara eventet?' 
+        {% endif %}
+        
+        return confirm(message)
+    }
 </script>
 
 {% endblock %}

@@ -1,22 +1,84 @@
-#event-form-box {
-    background-color: #342A3B;
+#flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 7em;
+}
+
+@media only screen and (min-width: 600px) {
+    #flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: left;
+        justify-content: left;
+        padding-top: 0em;
+    }
+}
+
+#flex-container-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+#flex-container-content-button {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 1em;
+}
+
+#flex-container-content>* {
     color: white;
-    position: absolute;
-    top: 15%;
-    width: 60%;
-    height: 35em;
+    background-color: #342A3B;
+    padding: 1em;
     border-radius: 1.5em;
-    display: table;
+}
+
+#flex-container>* {
+    color: white;
+    background-color: #342A3B;
+    margin: 1em;
+    border-radius: 1.5em;
 }
 
 #new-event {
-    background-color: #342A3B;
-    color: #FF71FF;
     font-size: 2em;
-    padding-left: 1.6em;
-    padding-top: 1em;
-    border-top-left-radius: 1em;
-    height: 0em;
+    color: #FF71FF;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+#submit-button {
+    background-color: #FF71FF;
+    color: white;
+    border-radius: 0.4em;
+    border-color: #FF71FF;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+#id_name {
+    height: 3em;
+}
+
+#id_release {
+    height: 3em;
+}
+
+#id_form {
+    height: 3em;
+}
+
+#id_disappear {
+    height: 3em;
 }
 
 #table-row-1 {
@@ -55,26 +117,6 @@
     display: table-cell;
 }
 
-#id_name {
-    width: 40em;
-    height: 3em;
-}
-
-#id_form {
-    width: 40em;
-    height: 3em;
-}
-
-#id_release {
-    width: 15em;
-    height: 3em;
-}
-
-#id_disappear {
-    width: 15em;
-    height: 3em;
-}
-
 #id_who {
     list-style-type: none;
     padding-left: 0em;
@@ -97,17 +139,4 @@ input[type=datetime-local] {
 
 input[type=datetime-local]:focus {
     border: 3px solid #555;
-}
-
-#submit-button {
-    background-color: #FF71FF;
-    color: white;
-    position: absolute;
-    bottom: 3em;
-    right: 4em;
-    width: 5em;
-    height: 3em;
-    border: 0px;
-    border-radius: 0.6em;
-    font-size: 1em;
 }
