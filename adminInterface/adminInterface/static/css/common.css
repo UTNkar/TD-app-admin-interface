@@ -10,3 +10,8 @@ h1 {
     font-size: 1em;
     text-align: center;
 }
+
+main {
+    display: flex;
+    flex-direction: column;
+}

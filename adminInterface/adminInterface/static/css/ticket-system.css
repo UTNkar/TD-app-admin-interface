@@ -1,12 +1,41 @@
-#header-text {
+header {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    background-color: #342A3B;
+    padding: 0.5em;
+    color: white;
     font-size: 2em;
-    color: #342A3B;
-    background-color: white;
 }
 
-.header {
-    display: flex;
-    flex-wrap: wrap;
+.container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 1.2em;
+    height: 0.15em;
+    background-color: white;
+    margin: 0.2em 0;
+    transition: 0.4s;
+    margin-right: 1em;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {
+    opacity: 0;
+}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
 }
 
 .flex-container {
@@ -14,6 +43,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    padding-top: 7em;
 }
 
 @media only screen and (min-width: 600px) {
@@ -22,6 +52,15 @@
         flex-wrap: wrap;
         align-items: left;
         justify-content: left;
+        padding-top: 0em;
+    }
+    header {
+        position: relative;
+    }
+    .bar1,
+    .bar2,
+    .bar3 {
+        display: none;
     }
 }
 
@@ -58,11 +97,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: center;
     text-align: center;
 }
 
+#sections-button {
+    padding-top: 4em;
+}
+
 .edit-button {
+    align-self: flex-end;
     background-color: #FF71FF;
     color: white;
     width: 6em;

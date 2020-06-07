@@ -1,7 +1,15 @@
 {% extends "base.html"%} {% block content %}
 <header>
+    <div class="sidenav-mobile">
+        <div class="container" onclick="myFunction(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
     Biljettsläpp
 </header>
+
 <div class="flex-container">
     <a class="create-new" href="{% url 'create_event'  %}">
         <div class="plus">
@@ -47,6 +55,17 @@
 <script>
     function deleteAlert() {
         return confirm('Är du säker på att du vill ta bort eventet?')
+    }
+
+    function myFunction(x) {
+        x.classList.toggle("change");
+        var navbar = document.getElementById("sidenav").innerHTML;
+        console.log(navbar)
+        if (navbar.style.display === "none") {
+            navbar.style.display = "flex";
+        } else {
+            navbar.style.display = "none";
+        }
     }
 </script>
 
