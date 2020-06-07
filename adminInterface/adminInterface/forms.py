@@ -3,6 +3,7 @@ from adminInterface.models import Event, Notification, Section
 from django import forms
 from adminInterface.firebase_utils import Firestore, CloudMessaging
 import datetime
+from adminInterface.fields import DataListWidget
 
 
 class SectionForm(ModelForm):
@@ -87,9 +88,22 @@ class NotificationForm(ModelForm):
         fields = ['title',
                   'body',
                   'sender',
-                  'senderDate',
                   'who'
                   ]
+    SENDER_CHOICES = [
+        'Rekå',
+        'Fadderkå',
+        'Mediakå',
+        'UTN',
+    ]
+
+    sender = forms.CharField(
+        max_length=50,
+        widget=DataListWidget(
+            data_list=SENDER_CHOICES,
+            name="sender"
+        )
+    )
 
     def save(self):
         data = self.cleaned_data

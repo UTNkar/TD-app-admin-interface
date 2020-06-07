@@ -48,14 +48,8 @@ class Event(models.Model):
 
 
 class Notification(models.Model):
-    SENDER_CHOICES = [
-        ('Rekå', 'Rekå'),
-        ('Fadderkå', 'Fadderkå'),
-        ('Mediakå', 'Mediakå'),
-        ('UTN', 'UTN'),
-    ]
-    title = models.CharField(max_length=30)
-    body = models.CharField(max_length=300)
-    sender = models.CharField(max_length=8, choices=SENDER_CHOICES)
-    senderDate = models.DateTimeField(editable=True)
+    title = models.CharField(max_length=65)
+    body = models.CharField(max_length=240)
+    sender = models.CharField(max_length=50)
+    senderDate = models.CharField(max_length=8)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
