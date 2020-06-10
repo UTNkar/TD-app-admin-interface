@@ -1,4 +1,4 @@
-Django[argon2]==3.0.4
+Django[argon2]==3.0.7
 
 firebase-admin==4.0.1
 
