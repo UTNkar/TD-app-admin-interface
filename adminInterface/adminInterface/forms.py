@@ -4,6 +4,8 @@ from django import forms
 from adminInterface.firebase_utils import Firestore, CloudMessaging
 import datetime
 from adminInterface.fields import DataListWidget
+import numpy as np
+from math import ceil
 
 
 class SectionForm(ModelForm):
@@ -109,41 +111,48 @@ class NotificationForm(ModelForm):
         data = self.cleaned_data
         messaging = CloudMessaging.get_instance()
 
+        who = data.get('who')
         db = Firestore.get_instance()
-        section_ref = db.collection('users')
+        section_ref = db.collection('users').where('userClass', 'in', who)
         docs = section_ref.stream()
 
-        who = data.get('who')
+        new_docs = np.array(docs)
+        number_of_slices = len(new_docs) / 100
+        users_chunks = np.array_split(new_docs, ceil(number_of_slices))
+
+        for doc in docs:
+            print(doc.to_dict()['userClass'])
+
         registration_tokens = []
 
-        for user in docs:
-            user_fields = user.to_dict()
-            user_class_name = user_fields.get('userClass')
-            for who_class_name in who:
-                if who_class_name == user_class_name:
-                    token = user_fields.get('userToken')
-                    if len(token) > 0:
-                        registration_tokens.append(token)
+        # for user in docs:
+        #     user_fields = user.to_dict()
+        #     user_class_name = user_fields.get('userClass')
+        #     for who_class_name in who:
+        #         if who_class_name == user_class_name:
+        #             token = user_fields.get('userToken')
+        #             if len(token) > 0:
+        #                 registration_tokens.append(token)
 
         # date without 0 / month without 0
         time_now = datetime.datetime.now()
         senderDate = time_now.strftime("%-d/%-m")
 
-        message = messaging.MulticastMessage(
-            notification=messaging.Notification(
-                title=data.get('title'),
-                body=data.get('body'),
-            ),
-            data={
-                'title': data.get('title'),
-                'body': data.get('body'),
-                'sender': data.get('sender'),
-                'senderDate': senderDate
-            },
-            tokens=registration_tokens,
-        )
-        response = messaging.send_multicast(message)
-        # See the BatchResponse reference documentation
-        # for the contents of response.
-        print('{0} messages were sent successfully'.format(response.
-                                                           success_count))
+        # message = messaging.MulticastMessage(
+        #     notification=messaging.Notification(
+        #         title=data.get('title'),
+        #         body=data.get('body'),
+        #     ),
+        #     data={
+        #         'title': data.get('title'),
+        #         'body': data.get('body'),
+        #         'sender': data.get('sender'),
+        #         'senderDate': senderDate
+        #     },
+        #     tokens=registration_tokens,
+        # )
+        # response = messaging.send_multicast(message)
+        # # See the BatchResponse reference documentation
+        # # for the contents of response.
+        # print('{0} messages were sent successfully'.format(response.
+        #                                                    success_count))
