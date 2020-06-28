@@ -128,11 +128,19 @@ def edit_section(request, id):
     section = section_ref.get()
     sec = section.to_dict()
 
+    classNames = []
+    for i in sec.get("classes"):
+        classNames.append(i.get("className"))
+
+    classes_string = ",".join(classNames)
+
     s = Section(
         firebase_id=id,
         sectionName=sec.get('sectionName'),
-        sectionFullName=sec.get('sectionFullName')
+        sectionFullName=sec.get('sectionFullName'),
+        classes=classes_string
     )
+
     sec_form = SectionForm(request.POST, instance=s)
     if request.method == 'POST':
         if sec_form.is_valid():
