@@ -10,7 +10,8 @@
         <div>
             Lägg till ny sektion
         </div>
-    </a> {% for section in sections %}
+    </a> 
+    {% for section in sections %}
     <div>
         <div class="event-name">
             {{section.sectionName}}
@@ -18,6 +19,10 @@
         <div class="event-section">
             långnamn: {{section.sectionFullName}}
         </div>
+        <div class="event-section">
+            Klasser: {{section.classes}}
+        </div>
+        
         <div class="edit-button">
             <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_section' section.firebase_id %}">
                         Ta bort
@@ -29,7 +34,6 @@
                     </a>
         </div>
     </div>
-
     {% endfor %}
 </div>
 

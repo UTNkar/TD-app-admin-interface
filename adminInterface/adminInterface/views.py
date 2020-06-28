@@ -98,10 +98,19 @@ def sections(request):
 
     for doc in classes_docs:
         doc_fields = doc.to_dict()
+        classNames = []
+
+        if doc_fields.get('classes') is not None:
+            for i in doc_fields.get('classes'):
+                classNames.append(i.get("className"))
+
+        classes_string = ",".join(classNames)
+
         section = Section(
             firebase_id=doc.id,
             sectionName=doc_fields.get('sectionName'),
-            sectionFullName=doc_fields.get('sectionFullName')
+            sectionFullName=doc_fields.get('sectionFullName'),
+            classes=classes_string
         )
         sections.append(section)
 
