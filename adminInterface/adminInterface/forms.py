@@ -6,6 +6,7 @@ import datetime
 from adminInterface.fields import DataListWidget
 import numpy as np
 from math import ceil
+from sentry_sdk import capture_exception
 
 
 class SectionForm(ModelForm):
@@ -116,43 +117,51 @@ class NotificationForm(ModelForm):
         section_ref = db.collection('users').where('userClass', 'in', who)
         docs = section_ref.stream()
 
-        new_docs = np.array(docs)
-        number_of_slices = len(new_docs) / 100
-        users_chunks = np.array_split(new_docs, ceil(number_of_slices))
-
-        for doc in docs:
-            print(doc.to_dict()['userClass'])
-
         registration_tokens = []
+        for doc in docs:
+            doc = doc.to_dict()
+            registration_token = doc.get("userToken")
 
-        # for user in docs:
-        #     user_fields = user.to_dict()
-        #     user_class_name = user_fields.get('userClass')
-        #     for who_class_name in who:
-        #         if who_class_name == user_class_name:
-        #             token = user_fields.get('userToken')
-        #             if len(token) > 0:
-        #                 registration_tokens.append(token)
+            if registration_token:
+                registration_tokens.append(registration_token)
+
+        new_docs = np.array(registration_tokens)
+
+        # A multicast message can only be sent to up to 100 registration
+        # tokens at a time. We therefor split the user's registration tokens
+        # into arrays with a maximum length of 99 just to have a safe margin
+        number_of_slices = ceil(new_docs.size / 99)
+        users_chunks = np.array_split(new_docs, number_of_slices)
 
         # date without 0 / month without 0
         time_now = datetime.datetime.now()
         senderDate = time_now.strftime("%-d/%-m")
 
-        # message = messaging.MulticastMessage(
-        #     notification=messaging.Notification(
-        #         title=data.get('title'),
-        #         body=data.get('body'),
-        #     ),
-        #     data={
-        #         'title': data.get('title'),
-        #         'body': data.get('body'),
-        #         'sender': data.get('sender'),
-        #         'senderDate': senderDate
-        #     },
-        #     tokens=registration_tokens,
-        # )
-        # response = messaging.send_multicast(message)
-        # # See the BatchResponse reference documentation
-        # # for the contents of response.
-        # print('{0} messages were sent successfully'.format(response.
-        #                                                    success_count))
+        for users_chunk in users_chunks:
+            message = messaging.MulticastMessage(
+                notification=messaging.Notification(
+                    title=data.get('title'),
+                    body=data.get('body'),
+                ),
+                data={
+                    'title': data.get('title'),
+                    'body': data.get('body'),
+                    'sender': data.get('sender'),
+                    'senderDate': senderDate
+                },
+                tokens=users_chunk.tolist(),
+            )
+            try:
+                response = messaging.send_multicast(message)
+                print(
+                    '{0} messages were sent successfully'.format(
+                        response.success_count
+                    )
+                )
+                print('{0} messages failed'.format(response.failure_count))
+                if response.failure_count > 0:
+                    for sendResponse in response.responses:
+                        if not sendResponse.success:
+                            print(sendResponse.exception)
+            except Exception as error:
+                capture_exception(error)
