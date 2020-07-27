@@ -48,8 +48,8 @@ class Event(models.Model):
 
 
 class Notification(models.Model):
-    title = models.CharField(max_length=65)
-    body = models.CharField(max_length=240)
+    title = models.CharField(max_length=65, help_text='Max 65 tecken')
+    body = models.CharField(max_length=240, help_text='Max 240 tecken')
     sender = models.CharField(max_length=50)
     senderDate = models.CharField(max_length=8)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
