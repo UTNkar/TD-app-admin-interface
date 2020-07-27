@@ -1,6 +1,7 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from adminInterface.utils import Firestore
+from django.core.validators import URLValidator
 
 
 class Section(models.Model):
@@ -42,6 +43,7 @@ class Event(models.Model):
     firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
-    form = models.CharField(max_length=30)
+    form = models.URLField(
+        max_length=200, validators=[URLValidator(schemes=['http', 'https'])])
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
