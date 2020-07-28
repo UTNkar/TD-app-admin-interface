@@ -11,7 +11,23 @@ h1 {
     text-align: center;
 }
 
+header p {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    background-color: #342A3B;
+    padding: 0.5em;
+    color: white;
+    font-size: 2em;
+    z-index: 1;
+}
+
 main {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
