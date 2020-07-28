@@ -1,12 +1,14 @@
-{% load static %}
-
-<head>
-    <meta charset="UTF-8">
-    <title>TD-app-admin</title>
-    <link rel="icon" type="image/ico" href="{% static 'images/icon-logo.png' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/navigation-bar.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ticket-system.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/create_event.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<header>
+    <div class="sidenav-mobile">
+        <div class="container" onclick="openSidebar(this)">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+    {% for title,link in links.items %}
+        {% if link in request.path %}
+            <p>{{title}}</p>
+        {%endif%}
+    {% endfor %}
+</header> 
