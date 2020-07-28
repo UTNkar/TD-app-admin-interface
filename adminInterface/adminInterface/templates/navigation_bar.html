@@ -5,11 +5,17 @@
 </script>
 {% endif %}
 
-<div class="sidenav">
-    <h1 id="#header-text">
-        Inloggad som <br />
-        {{request.user}}
-    </h1>
+<div id="sidenav">
+    <div class="flex-sideav">
+        <div id="cross" onclick="closeSidebar(this)">
+            x
+        </div>
+        <h1 id="header-sidenav">
+            Inloggad som <br />
+            {{request.user}}
+        </h1>
+    </div>
+    
     {% for title,link in links.items %}
         {% if link in request.path %}
             <a class="active" href="{{link}}">{{title}}</a>
@@ -18,3 +24,17 @@
         {%endif%}
     {% endfor %}
 </div> 
+
+<script>
+    function openSidebar(x) {
+        var sidenav = document.getElementById("sidenav");
+        sidenav.style.display = "block";
+        sidenav.style.position = "absolute"
+        sidenav.style.width = "70%"
+        sidenav.style.height = "100%"
+    }
+    function closeSidebar(x) {
+        var sidenav = document.getElementById("sidenav");
+        sidenav.style.display = "none";
+    }
+</script>
