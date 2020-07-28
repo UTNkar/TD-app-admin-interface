@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from adminInterface.models import Event, Notification, Section
 from django import forms
-from adminInterface.firebase_utils import Firestore, CloudMessaging
+from adminInterface.utils.firebase_utils import Firestore, CloudMessaging
 import datetime
 from adminInterface.fields import DataListWidget
 import numpy as np

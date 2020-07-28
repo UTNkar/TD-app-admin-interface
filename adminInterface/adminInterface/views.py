@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from adminInterface.models import Event, Section
 from adminInterface.forms import EventForm, NotificationForm, SectionForm
-from adminInterface.firebase_utils import Firestore
+from adminInterface.utils.firebase_utils import Firestore
 
 
 def singIn(request):

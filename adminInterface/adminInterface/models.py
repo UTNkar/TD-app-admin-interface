@@ -1,6 +1,6 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-from adminInterface.firebase_utils import Firestore
+from adminInterface.utils.firebase_utils import Firestore
 
 
 class Section(models.Model):
