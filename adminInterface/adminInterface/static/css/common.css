@@ -17,3 +17,12 @@ h1 {
     /* Same as the width of the sidebar */
     padding: 0px 10px;
 }
+
+#notifications {
+    list-style-type: none;
+    background-color: lightblue;
+    padding: 1em 2em;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1em;
+}

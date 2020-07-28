@@ -8,13 +8,19 @@
 
 {% include "header.html" %}
 
-<body>
-
+<body>   
     <div id="nav-bar">
         {% navigation_bar %}
     </div>
 
     <div class="main">
+        {% if messages %}
+            <ul id="notifications">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         {% block content%}{% endblock %}
     </div>
 </body>
