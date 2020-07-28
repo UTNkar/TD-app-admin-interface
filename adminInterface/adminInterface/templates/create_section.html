@@ -1,84 +1,39 @@
 {% extends "base.html"%} {% block content %}
-
-<header>
-    Sektioner
-</header>
-
-<div id="flex-container">
-    <div>
-        <div id="new-event">
-            {% if edit_section %}
-                    Ändra sektion
-                    {% else %}
-                    Ny sektion
-                    {% endif %}
-        </div>
-        {{form.errors}}
-        <div id="flex-container-content-button">
-            <div id="flex-container-content">
-                <div id="content">
-                    Sektionsnamn <br> {{ form.sectionName }}
+<form method="POST" action="{% url 'create_section' %}" class="event-form">
+    {% csrf_token %}
+    {{form.firebase_id}}
+    <div id="flex-container">
+        <div>
+            <div id="new-event">
+                {% if edit_section %}
+                        Ändra sektion
+                        {% else %}
+                        Ny sektion
+                        {% endif %}
+            </div>
+            {{form.errors}}
+            <div id="flex-container-content-button">
+                <div id="flex-container-content">
+                    <div id="content">
+                        Sektionsnamn <br> {{ form.sectionName }}
+                    </div>
+                    <div id="content">
+                        Hela sektionsnamnet <br> {{ form.sectionFullName }}
+                    </div>  
                 </div>
-                <div id="content">
-                    Hela sektionsnamnet <br> {{ form.sectionFullName }}
-                </div>  
-            </div>
-            <div>
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event %}
-                    Spara ändringar
-                    {%else%}
-                    Spara
-                    {% endif %}
-                </button>
+                <div>
+                    <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                        {% if edit_event %}
+                        Spara ändringar
+                        {%else%}
+                        Spara
+                        {% endif %}
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
-
-
-
-
-{% comment %} <div id="header-text">
-    Sektioner
-</div>
-<div>
-    <form method="POST" action="{% url 'create_section' %}" class="event-form">
-        {% csrf_token %}
-        {{form.firebase_id}}
-        <div id="event-form-box">
-                <div id="new-event">
-                    {% if edit_section %}
-                    Ändra sektion
-                    {% else %}
-                    Ny sektion
-                    {% endif %}
-                </div>
-                {{form.errors}}
-            <div id="table-row-1">
-                <div id="col-1">
-                    Sektionsnamn <br> {{ form.sectionName }}
-                </div>
-                <div id="col-2">
-                    Hela sektionsnamnet <br> {{ form.sectionFullName }}
-                </div>
-            </div>
-            </div>
-                <div id="new-event">
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event %}
-                    Spara ändringar
-                    {%else%}
-                    Spara
-                    {% endif %}
-                </button>
-                </div>   
-            </div>         
-        </div>
-    </form>
-</div> {% endcomment %}
-
+</form>
 <script>
 function saveAlert() {
     {% if edit_section %}
