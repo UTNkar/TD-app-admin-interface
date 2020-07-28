@@ -1,71 +1,48 @@
 {% extends "base.html"%} {% block content %}
-<header>
-    <div class="sidenav-mobile">
-        <div class="container" onclick="myFunction(this)">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-    </div>
-    Biljettsläpp
-</header>
 
 <div class="flex-container">
-    <a class="create-new" href="{% url 'create_event'  %}">
+    <a class="card" id="add-event" href="{% url 'create_event'  %}">
         <div class="plus">
             +
         </div>
         <div>
-            Lägg till nytt biljettsläpp
+            Lägg till ny sektion
         </div>
-    </a> {% for event in events %}
-    <div>
-        <div class="event-name">
-            {{event.name}}
-        </div>
-        <div>
-            Länk: {{event.form}}
-        </div>
-        <div>
-            Tas bort: {{event.disappear}}
-        </div>
-        <div>
-            Datum & tid: {{event.release}}
-        </div>
-        <div>
-            Vilka: {%for class in event.who%} {{class}}, {% endfor %}
+    </a>
+    {% for event in events %}
+     <div class="card" id="event">
+        <h2 class="title">
+             {{event.name}}
+        </h2>
+        <div class="content">
+            <p>
+                Länk: {{event.form}}
+            </p>
+            <p>
+                Tas bort: {{event.disappear}}
+            </p>
+            <p>
+                Datum & tid: {{event.release}}
+            </p>
+            <p>
+                Vilka: {%for class in event.who%} {{class}}, {% endfor %}
+            </p>
         </div>
         <div class="buttons">
-            <div class="edit-button">
-                <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_event' event.firebase_id %}">
-                    Ta bort
-                </a>
-            </div>
-            <div class="edit-button">
-                <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}"> 
-                    Redigera
-                </a>
-            </div>
+            <a class="button" onclick="return deleteAlert()" href="{%url 'delete_event' event.firebase_id %}">
+                Ta bort
+            </a>
+            <a class="button" href="{% url 'edit_event' event.firebase_id %}"> 
+                Redigera
+            </a>
         </div>
     </div>
-
     {% endfor %}
 </div>
 
 <script>
     function deleteAlert() {
         return confirm('Är du säker på att du vill ta bort eventet?')
-    }
-
-    function myFunction(x) {
-        x.classList.toggle("change");
-        var navbar = document.getElementById("sidenav").innerHTML;
-        console.log(navbar)
-        if (navbar.style.display === "none") {
-            navbar.style.display = "flex";
-        } else {
-            navbar.style.display = "none";
-        }
     }
 </script>
 
