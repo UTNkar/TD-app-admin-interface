@@ -127,12 +127,4 @@ class NotificationForm(ModelForm):
             data.get("sender")
         )
 
-        print('{0} messages were sent successfully'.format(
-            response.success_count
-        ))
-        print('{0} messages failed'.format(response.failure_count))
-
-        if response.failure_count > 0:
-            for sendResponse in response.responses:
-                if not sendResponse.success:
-                    print(sendResponse.exception)
+        return response

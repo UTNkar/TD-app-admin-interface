@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from adminInterface.models import Event, Section
 from adminInterface.forms import EventForm, NotificationForm, SectionForm
 from adminInterface.utils.firebase_utils import Firestore
+from django.contrib import messages
 
 
 def singIn(request):
@@ -19,7 +20,44 @@ def create_notification(request):
     if request.method == 'POST':
         form = NotificationForm(request.POST)
         if form.is_valid():
-            form.save()
+            responses = form.save()
+
+            batches_failed = 0
+            success_count = 0
+            failure_count = 0
+
+            for response in responses:
+                if response is None:
+                    batches_failed += 1
+                else:
+                    success_count += response.success_count
+                    failure_count += response.failure_count
+
+            messages.info(
+                request,
+                'Notisen skickades till {0} användare'.format(
+                    success_count
+                )
+            )
+
+            messages.info(
+                request,
+                'Notisen misslyckades att skickas till {0} användare'.format(
+                    failure_count
+                )
+            )
+
+            if batches_failed > 0:
+                messages.info(
+                    request,
+                    '{0} batches failed'.format(batches_failed)
+                )
+
+            if response.failure_count > 0:
+                for sendResponse in response.responses:
+                    if not sendResponse.success:
+                        print(sendResponse.exception)
+
             return redirect('/notifications/')
     else:
         form = NotificationForm()
