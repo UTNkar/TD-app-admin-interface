@@ -2,11 +2,7 @@ from django.forms import ModelForm
 from adminInterface.models import Event, Notification, Section
 from django import forms
 from adminInterface.utils.firebase_utils import Firestore, CloudMessaging
-import datetime
 from adminInterface.fields import DataListWidget
-import numpy as np
-from math import ceil
-from sentry_sdk import capture_exception
 
 
 class SectionForm(ModelForm):
@@ -110,7 +106,6 @@ class NotificationForm(ModelForm):
 
     def save(self):
         data = self.cleaned_data
-        messaging = CloudMessaging.get_instance()
 
         who = data.get('who')
         db = Firestore.get_instance()
@@ -125,43 +120,19 @@ class NotificationForm(ModelForm):
             if registration_token:
                 registration_tokens.append(registration_token)
 
-        new_docs = np.array(registration_tokens)
+        response = CloudMessaging.send_notification(
+            registration_tokens,
+            data.get("title"),
+            data.get("body"),
+            data.get("sender")
+        )
 
-        # A multicast message can only be sent to up to 100 registration
-        # tokens at a time. We therefor split the user's registration tokens
-        # into arrays with a maximum length of 99 just to have a safe margin
-        number_of_slices = ceil(new_docs.size / 99)
-        users_chunks = np.array_split(new_docs, number_of_slices)
+        print('{0} messages were sent successfully'.format(
+            response.success_count
+        ))
+        print('{0} messages failed'.format(response.failure_count))
 
-        # date without 0 / month without 0
-        time_now = datetime.datetime.now()
-        senderDate = time_now.strftime("%-d/%-m")
-
-        for users_chunk in users_chunks:
-            message = messaging.MulticastMessage(
-                notification=messaging.Notification(
-                    title=data.get('title'),
-                    body=data.get('body'),
-                ),
-                data={
-                    'title': data.get('title'),
-                    'body': data.get('body'),
-                    'sender': data.get('sender'),
-                    'senderDate': senderDate
-                },
-                tokens=users_chunk.tolist(),
-            )
-            try:
-                response = messaging.send_multicast(message)
-                print(
-                    '{0} messages were sent successfully'.format(
-                        response.success_count
-                    )
-                )
-                print('{0} messages failed'.format(response.failure_count))
-                if response.failure_count > 0:
-                    for sendResponse in response.responses:
-                        if not sendResponse.success:
-                            print(sendResponse.exception)
-            except Exception as error:
-                capture_exception(error)
+        if response.failure_count > 0:
+            for sendResponse in response.responses:
+                if not sendResponse.success:
+                    print(sendResponse.exception)
