@@ -6,11 +6,12 @@
 
 <html lang="en">
 
-{% include "header.html" %}
+{% include "head.html" %}
 
 <body>
     {% navigation_bar %}
     <main>
+        {% header %}
         {% block content%}{% endblock %}
     </main>
 </body>
