@@ -4,7 +4,8 @@ from firebase_admin import messaging
 import numpy as np
 import datetime
 from math import ceil
-from sentry_sdk import capture_exception
+from collections import Counter
+from sentry_sdk import capture_message
 
 
 class Firebase():
@@ -59,12 +60,23 @@ class CloudMessaging():
         sender (string): The person/group that sent the notification
 
         Returns:
-        list that contains:
-        firebase_admin.messaging.BatchResponse if a batch was sent or
-        None if a batch couldn't be sent
+        dict containing the following items:
+
+        success_count (int): the number of users that the notification
+        was successfully sent to
+
+        failure_count (int): the number of users that the notification could
+        not be sent to
+
+        batches_failed (int): the number of batches that failed
+
+        error_reasons_counted (list): A list of tuples
+        (error_message, amount_of_times) that contain the error message and
+        the number of times it occured
         """
         messaging = CloudMessaging.get_instance()
         np_tokens = np.array(registration_tokens)
+        np_tokens = np.append(np_tokens, "fefefefe")
 
         # A multicast message can only be sent to up to 100 registration
         # tokens at a time. We therefor split the user's registration tokens
@@ -77,7 +89,13 @@ class CloudMessaging():
         senderDate = time_now.strftime("%-d/%-m")
 
         responses = []
+        error_reasons = []
+        batches_failed = 0
+        success_count = 0
+        failure_count = 0
+
         for users_chunk in users_chunks:
+            users_chunk_list = users_chunk.tolist()
             message = messaging.MulticastMessage(
                 notification=messaging.Notification(
                     title=title,
@@ -89,13 +107,38 @@ class CloudMessaging():
                     'sender': sender,
                     'senderDate': senderDate
                 },
-                tokens=users_chunk.tolist(),
+                tokens=users_chunk_list,
             )
             try:
                 response = messaging.send_multicast(message)
                 responses.append(response)
             except Exception as error:
-                capture_exception(error)
-                responses.append(None)
+                batches_failed += 1
+                failure_count += len(users_chunk_list)
+                error_reasons.append(str(error))
 
-        return responses
+        for response in responses:
+            success_count += response.success_count
+            failure_count += response.failure_count
+
+            if response.failure_count > 0:
+                for sendResponse in response.responses:
+                    if not sendResponse.success:
+                        error_reasons.append(str(sendResponse.exception))
+
+        error_reasons_counted = Counter(error_reasons).items()
+
+        if len(error_reasons) > 0:
+            message = \
+                "The following errors occured when sending a notification: "
+            for reason, amount_of_times in error_reasons_counted:
+                message += "{0}: {1}. ".format(reason, amount_of_times)
+
+            capture_message(message)
+
+        return {
+            'error_reasons_counted': error_reasons_counted,
+            'success_count': success_count,
+            'failure_count': failure_count,
+            'batches_failed': batches_failed,
+        }

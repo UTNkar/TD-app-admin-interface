@@ -5,7 +5,6 @@ from adminInterface.models import Event, Section
 from adminInterface.forms import EventForm, NotificationForm, SectionForm
 from adminInterface.utils.firebase_utils import Firestore
 from django.contrib import messages
-from collections import Counter
 
 
 def singIn(request):
@@ -21,53 +20,37 @@ def create_notification(request):
     if request.method == 'POST':
         form = NotificationForm(request.POST)
         if form.is_valid():
-            responses = form.save()
-
-            batches_failed = 0
-            success_count = 0
-            failure_count = 0
-            exceptions = []
-
-            for response in responses:
-                if response is None:
-                    batches_failed += 1
-                else:
-                    success_count += response.success_count
-                    failure_count += response.failure_count
-
-                if response.failure_count > 0:
-                    for sendResponse in response.responses:
-                        if not sendResponse.success:
-                            exceptions.append(str(sendResponse.exception))
+            statistics = form.save()
 
             messages.info(
                 request,
                 'Notisen skickades till {0} användare'.format(
-                    success_count
+                    statistics.get("success_count")
                 )
             )
 
             messages.info(
                 request,
                 'Notisen misslyckades att skickas till {0} användare'.format(
-                    failure_count
+                    statistics.get("failure_count")
                 )
             )
 
-            if batches_failed > 0:
+            if statistics.get("batches_failed") > 0:
                 messages.info(
                     request,
-                    '{0} batches failed'.format(batches_failed)
+                    '{0} batches failed'.format(
+                        statistics.get("batches_failed")
+                    )
                 )
 
-            total_exceptions = Counter(exceptions).items()
-            if len(total_exceptions) > 0:
+            if len(statistics.get("error_reasons_counted")) > 0:
                 messages.info(
                     request,
                     'Orsaker till utskicket misslyckades:'
                 )
 
-            for exception, amount in total_exceptions:
+            for exception, amount in statistics.get("error_reasons_counted"):
                 messages.info(
                     request,
                     '{0}: {1}'.format(exception, amount)
