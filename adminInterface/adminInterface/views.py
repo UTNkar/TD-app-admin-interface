@@ -5,6 +5,7 @@ from adminInterface.models import Event, Section
 from adminInterface.forms import EventForm, NotificationForm, SectionForm
 from adminInterface.utils.firebase_utils import Firestore
 from django.contrib import messages
+from collections import Counter
 
 
 def singIn(request):
@@ -25,6 +26,7 @@ def create_notification(request):
             batches_failed = 0
             success_count = 0
             failure_count = 0
+            exceptions = []
 
             for response in responses:
                 if response is None:
@@ -32,6 +34,11 @@ def create_notification(request):
                 else:
                     success_count += response.success_count
                     failure_count += response.failure_count
+
+                if response.failure_count > 0:
+                    for sendResponse in response.responses:
+                        if not sendResponse.success:
+                            exceptions.append(str(sendResponse.exception))
 
             messages.info(
                 request,
@@ -53,10 +60,18 @@ def create_notification(request):
                     '{0} batches failed'.format(batches_failed)
                 )
 
-            if response.failure_count > 0:
-                for sendResponse in response.responses:
-                    if not sendResponse.success:
-                        print(sendResponse.exception)
+            total_exceptions = Counter(exceptions).items()
+            if len(total_exceptions) > 0:
+                messages.info(
+                    request,
+                    'Orsaker till utskicket misslyckades:'
+                )
+
+            for exception, amount in total_exceptions:
+                messages.info(
+                    request,
+                    '{0}: {1}'.format(exception, amount)
+                )
 
             return redirect('/notifications/')
     else:
