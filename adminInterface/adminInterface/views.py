@@ -93,10 +93,10 @@ def start(request):
 def sections(request):
     db = Firestore.get_instance()
     section_ref = db.collection('sections')
-    classes_docs = section_ref.stream()
+    section_docs = section_ref.stream()
     sections = []
 
-    for doc in classes_docs:
+    for doc in section_docs:
         doc_fields = doc.to_dict()
         classNames = []
 
