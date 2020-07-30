@@ -19,8 +19,8 @@ class SectionForm(ModelForm):
         id = data.get('firebase_id')
         class_list = []
         classes_split = data.get('classes').split(',')
-        for i in classes_split:
-            class_list.append({'className': i})
+        for class_name in classes_split:
+            class_list.append({'className': class_name})
 
         if id:
             doc_ref = db.collection(u'sections').document(id)
