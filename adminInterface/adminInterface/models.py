@@ -1,7 +1,6 @@
 from django.db import models
 from multiselectfield import MultiSelectField
 from adminInterface.utils import Firestore
-from django.core.validators import URLValidator
 
 
 class Section(models.Model):
