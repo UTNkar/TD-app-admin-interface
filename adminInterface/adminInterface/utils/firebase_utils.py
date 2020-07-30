@@ -5,7 +5,7 @@ import numpy as np
 import datetime
 from math import ceil
 from collections import Counter
-from sentry_sdk import capture_message
+from utils.log_utils import log_message
 
 
 class Firebase():
@@ -181,7 +181,7 @@ class CloudMessaging():
             for reason, amount_of_times in error_reasons_counted:
                 message += "{0}: {1}. ".format(reason, amount_of_times)
 
-            capture_message(message)
+            log_message(message)
 
         return {
             'error_reasons_counted': error_reasons_counted,
