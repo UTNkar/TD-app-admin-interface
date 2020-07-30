@@ -5,7 +5,7 @@ import numpy as np
 import datetime
 from math import ceil
 from collections import Counter
-from utils.log_utils import log_message
+from adminInterface.utils.log_utils import log_message
 
 
 class Firebase():
