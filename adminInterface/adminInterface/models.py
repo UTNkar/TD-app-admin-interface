@@ -4,6 +4,9 @@ from adminInterface.utils.firebase_utils import Firestore
 
 
 class Section(models.Model):
+    class Meta:
+        managed = False
+
     firebase_id = models.CharField(max_length=60)
     sectionName = models.CharField(max_length=5)
     sectionFullName = models.CharField(max_length=60)
@@ -39,6 +42,9 @@ class Section(models.Model):
 
 
 class Event(models.Model):
+    class Meta:
+        managed = False
+
     firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
@@ -48,6 +54,9 @@ class Event(models.Model):
 
 
 class Notification(models.Model):
+    class Meta:
+        managed = False
+
     title = models.CharField(max_length=65, help_text='Max 65 tecken')
     body = models.CharField(max_length=240, help_text='Max 240 tecken')
     sender = models.CharField(max_length=50)
