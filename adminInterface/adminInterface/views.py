@@ -100,9 +100,9 @@ def sections(request):
         doc_fields = doc.to_dict()
         classNames = []
 
-        if doc_fields.get('classes') is not None:
-            for i in doc_fields.get('classes'):
-                classNames.append(i.get("className"))
+        classes = doc_fields.get('classes', [])
+        for this_class in classes:
+            classNames.append(this_class.get("className"))
 
         classes_string = ",".join(classNames)
 
