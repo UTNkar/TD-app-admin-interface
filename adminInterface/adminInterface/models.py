@@ -42,6 +42,6 @@ class Event(models.Model):
     firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
-    form = models.CharField(max_length=30)
+    form = models.URLField()
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
