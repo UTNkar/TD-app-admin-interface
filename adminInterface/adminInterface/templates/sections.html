@@ -1,37 +1,44 @@
-{% extends "base.html"%}
-
-{% block content %}
-    <h1 id="#header-text">
-        Sektioner
-    </h1>
-    <a href="{% url 'create_section'  %}">
-        Skapa ny sektion
-    </a>
+{% extends "base.html"%} {% block content %}
+<header>
+    Sektioner
+</header>
+<div class="flex-container">
+    <a class="create-new" href="{% url 'create_section'  %}">
+        <div class="plus">
+            +
+        </div>
+        <div>
+            Lägg till ny sektion
+        </div>
+    </a> 
     {% for section in sections %}
-    <div class="all-events-boxes">
-        <div class="curr-events">
-            <div class="event-name">
-                {{section.sectionName}}
-            </div>
-            <div class="event-section">
-                långnamn: {{section.sectionFullName}}
-            </div>
-            <div class="edit-button">
-                <a onclick="return deleteAlert()" class="edit-link" href = "{%url 'delete_section' section.firebase_id %}">
-                    Ta bort
+    <div>
+        <div class="event-name">
+            {{section.sectionName}}
+        </div>
+        <div class="event-section">
+            långnamn: {{section.sectionFullName}}
+        </div>
+        <div class="event-section">
+            Klasser: {{section.classes}}
+        </div>
+        
+        <div class="edit-button">
+            <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_section' section.firebase_id %}">
+                        Ta bort
                 </a>
-            </div>
-            <div class="edit-button">
-                <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}" > 
-                    Redigera
-                </a>
-            </div>
+        </div>
+        <div class="edit-button">
+            <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}"> 
+                        Redigera
+                    </a>
         </div>
     </div>
     {% endfor %}
-    <script>
-        function deleteAlert() {
-            return confirm('Är du säker på att du vill ta bort sektionen?')
-        }
-    </script>
-{%endblock%}
+</div>
+
+<script>
+    function deleteAlert() {
+        return confirm('Är du säker på att du vill ta bort sektionen?')
+    }
+</script> {%endblock%}

@@ -11,19 +11,26 @@ class SectionForm(ModelForm):
 
     class Meta:
         model = Section
-        fields = ['firebase_id', 'sectionName', 'sectionFullName']
+        fields = ['firebase_id', 'sectionName', 'sectionFullName', 'classes']
 
     def save(self):
         data = self.cleaned_data
         db = Firestore.get_instance()
         id = data.get('firebase_id')
+        class_list = []
+        classes_split = data.get('classes').split(',')
+        for class_name in classes_split:
+            class_list.append({'className': class_name})
+
         if id:
             doc_ref = db.collection(u'sections').document(id)
         else:
             doc_ref = db.collection(u'sections').document()
+
         doc_ref.set({
             u'sectionName': data.get('sectionName'),
-            u'sectionFullName': data.get('sectionFullName')
+            u'sectionFullName': data.get('sectionFullName'),
+            u'classes': class_list
         })
         return data
 

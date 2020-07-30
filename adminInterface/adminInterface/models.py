@@ -7,7 +7,7 @@ class Section(models.Model):
     firebase_id = models.CharField(max_length=60)
     sectionName = models.CharField(max_length=5)
     sectionFullName = models.CharField(max_length=60)
-    classes = []
+    classes = models.CharField(max_length=60)
 
     @staticmethod
     def get_all_classes():
@@ -42,7 +42,7 @@ class Event(models.Model):
     firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
-    form = models.CharField(max_length=30)
+    form = models.URLField()
     release = models.DateTimeField(editable=True)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())
 

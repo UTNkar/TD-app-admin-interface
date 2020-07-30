@@ -1,20 +1,17 @@
 {% extends "base.html"%} {% block content %}
-
-<div id="header-text">
+<header>
     Biljettsläpp
-</div>
-
-<a id="create-event" href="{% url 'create_event' %}">
-    Skapa nytt event
-</a>
-
-<div>
-    Aktuella evenemang
-</div>
-
-{% for event in events%}
-<div class="all-events-boxes">
-    <div class="curr-events">
+</header>
+<div class="flex-container">
+    <a class="create-new" href="{% url 'create_event'  %}">
+        <div class="plus">
+            +
+        </div>
+        <div>
+            Lägg till nytt biljettsläpp
+        </div>
+    </a> {% for event in events %}
+    <div>
         <div class="event-name">
             {{event.name}}
         </div>
@@ -33,19 +30,20 @@
             {{class}}, 
             {% endfor %}
         </div> 
-        <div>
-            <a onclick="return deleteAlert()" href="{% url 'delete_event' event.firebase_id %}" class='btn btn-lg'>
-                Radera
+        <div class="edit-button">
+            <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_event' event.firebase_id %}">
+                Ta bort
             </a>
         </div>
         <div class="edit-button">
-            <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}" > 
+            <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}"> 
                 Redigera
             </a>
         </div>
     </div>
+
+    {% endfor %}
 </div>
-{% endfor %}
 
 <script>
 function deleteAlert() {

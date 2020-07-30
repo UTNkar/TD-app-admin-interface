@@ -139,15 +139,24 @@ def start(request):
 def sections(request):
     db = Firestore.get_instance()
     section_ref = db.collection('sections')
-    classes_docs = section_ref.stream()
+    section_docs = section_ref.stream()
     sections = []
 
-    for doc in classes_docs:
+    for doc in section_docs:
         doc_fields = doc.to_dict()
+        classNames = []
+
+        classes = doc_fields.get('classes', [])
+        for this_class in classes:
+            classNames.append(this_class.get("className"))
+
+        classes_string = ",".join(classNames)
+
         section = Section(
             firebase_id=doc.id,
             sectionName=doc_fields.get('sectionName'),
-            sectionFullName=doc_fields.get('sectionFullName')
+            sectionFullName=doc_fields.get('sectionFullName'),
+            classes=classes_string
         )
         sections.append(section)
 
@@ -174,11 +183,19 @@ def edit_section(request, id):
     section = section_ref.get()
     sec = section.to_dict()
 
+    classNames = []
+    for i in sec.get("classes"):
+        classNames.append(i.get("className"))
+
+    classes_string = ",".join(classNames)
+
     s = Section(
         firebase_id=id,
         sectionName=sec.get('sectionName'),
-        sectionFullName=sec.get('sectionFullName')
+        sectionFullName=sec.get('sectionFullName'),
+        classes=classes_string
     )
+
     sec_form = SectionForm(request.POST, instance=s)
     if request.method == 'POST':
         if sec_form.is_valid():

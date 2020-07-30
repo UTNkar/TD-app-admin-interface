@@ -1,14 +1,14 @@
 @import url('https://rsms.me/inter/inter.css');
 .sidenav {
-    height: 100%;
-    width: 15em;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
+    display: none;
     background-color: #342A3B;
-    overflow-x: hidden;
-    padding-top: 2em;
+    padding: 2em;
+}
+
+@media only screen and (min-width: 600px) {
+    .sidenav {
+        display: block;
+    }
 }
 
 .active {
@@ -16,8 +16,8 @@
 }
 
 .sidenav a {
-    padding: 0.3em 0.3em 0.3em 1em;
     text-decoration: none;
+    margin-top: 1em;
     font-size: 1.5em;
     color: white;
     display: block;

@@ -1,5 +1,7 @@
 body {
     font-family: 'Inter';
+    margin: 0;
+    display: flex;
 }
 
 h1 {

@@ -8,12 +8,12 @@
 
 {% include "header.html" %}
 
-<body>   
+<body>
     <div id="nav-bar">
         {% navigation_bar %}
     </div>
 
-    <div class="main">
+    <main>
         {% if messages %}
             <ul id="notifications">
                 {% for message in messages %}
@@ -22,7 +22,7 @@
             </ul>
         {% endif %}
         {% block content%}{% endblock %}
-    </div>
+    </main>
 </body>
 
 </html>
