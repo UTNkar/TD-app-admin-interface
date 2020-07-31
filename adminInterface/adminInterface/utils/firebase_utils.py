@@ -28,6 +28,34 @@ class Firestore():
             Firestore.dataBase = firestore.client()
         return Firestore.dataBase
 
+    @staticmethod
+    def get_user_registration_tokens_by_classes(classes):
+        """
+        Gets the registration token for all users that have selected one of the
+        classes in the classes array
+
+        Parameters:
+
+        classes (list of strings): The names of the classes
+
+        Returns
+
+        A list of strings containing the registration tokens
+        """
+        db = Firestore.get_instance()
+        section_ref = db.collection('users').where('userClass', 'in', classes)
+        docs = section_ref.stream()
+
+        registration_tokens = []
+        for doc in docs:
+            doc = doc.to_dict()
+            registration_token = doc.get("userToken")
+
+            if registration_token:
+                registration_tokens.append(registration_token)
+
+        return registration_tokens
+
 
 class CloudMessaging():
 
@@ -44,6 +72,7 @@ class CloudMessaging():
         The notifications are sent in batches of 99 per batch.
 
         Parameters:
+
         registration_tokens (list): A list of strings. Contains the
         registration tokens of the devices that the notification should be
         sent to
@@ -122,7 +151,8 @@ class CloudMessaging():
         """
         Sends a notification to the devices that have their registration token
         in the registration_tokens list. The notifications are sent in batches
-        of 99 per batch.
+        of 99 per batch. If an error occurs or a notification could not be
+        delivered, the error will be logged
 
         Parameters:
         registration_tokens (list): A list of strings. Contains the

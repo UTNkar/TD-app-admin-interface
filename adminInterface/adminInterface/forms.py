@@ -114,18 +114,10 @@ class NotificationForm(ModelForm):
     def save(self):
         data = self.cleaned_data
 
-        who = data.get('who')
-        db = Firestore.get_instance()
-        section_ref = db.collection('users').where('userClass', 'in', who)
-        docs = section_ref.stream()
+        classes = data.get('who')
 
-        registration_tokens = []
-        for doc in docs:
-            doc = doc.to_dict()
-            registration_token = doc.get("userToken")
-
-            if registration_token:
-                registration_tokens.append(registration_token)
+        registration_tokens = Firestore\
+            .get_user_registration_tokens_by_classes(classes)
 
         response = CloudMessaging.send_notification(
             registration_tokens,
