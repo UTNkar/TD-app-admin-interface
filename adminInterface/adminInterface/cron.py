@@ -1,7 +1,8 @@
 import kronos
 from datetime import datetime, time, timedelta
-from adminInterface.utils.firebase_utils import Firestore
+from adminInterface.utils.firebase_utils import Firestore, CloudMessaging
 from adminInterface.utils.time_utils import localize_timestamp
+from pytz import timezone
 
 
 @kronos.register('0 30 7,12 ? * * *')
@@ -41,4 +42,51 @@ def send_automatic_notification():
 
     for event in events:
         event_dict = event.to_dict()
-        print(event_dict)
+        attending_classes = event_dict.get("who")
+
+        registration_tokens = Firestore\
+            .get_user_registration_tokens_by_classes(attending_classes)
+
+        content = ""
+        title = ""
+        sender = "Rekå"
+
+        if current_hour == 12:
+            release = event_dict.get("release")
+            release_stockholm_time = release.astimezone(
+                timezone("Europe/Stockholm")
+            )
+            release_time = release_stockholm_time.strftime("%-H:%M")
+
+            content = (
+                "Imorgon klockan {0} släpps biljetterna till {1}. "
+                "Glöm inte att reservera "
+                "din biljett här i appen!"
+            ).format(release_time, event_dict.get("name"))
+
+            title = (
+                "Biljettsläpp för {0} öppnar imorgon"
+            ).format(event_dict.get("name"))
+
+        elif current_hour == 7:
+            content = (
+                "Om 30 minuter släpps biljetterna till {0}. "
+                "Glöm inte att reservera din biljett här i appen!"
+            ).format(event_dict.get("name"))
+
+            title = (
+                "Biljettsläpp för {0} öppnar om 30 min"
+            ).format(event_dict.get("name"))
+
+        else:
+            raise ValueError((
+                "Could not set a title and content "
+                "for automatic reminder notification"
+            ))
+
+        CloudMessaging.send_notification(
+            registration_tokens,
+            title,
+            content,
+            sender
+        )
