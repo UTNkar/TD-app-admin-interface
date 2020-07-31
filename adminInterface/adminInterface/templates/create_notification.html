@@ -1,0 +1,51 @@
+{% extends "base.html"%} {% block content %}
+
+<div id="header-text">
+    Notiser
+</div>
+<div>
+    <form method="POST" action="{% url 'create_notification' %}" class="event-form">
+        {% csrf_token %}
+        <div id="event-form-box">
+                <div id="new-event">
+                    Skapa notis
+                </div>
+                {{form.errors}}
+            <div id="table-row-1">
+                <div id="col-1">
+                    Titel <br> {{ form.title }}
+                </div>
+                <div id="col-2">
+                    Meddelande <br> {{ form.body }}
+                </div>
+            </div>
+
+            <div id="table-row-2">
+                <div id="col-1">
+                    Avsändare <br> {{ form.sender }}
+                </div>
+
+                <div id="col-2">
+                    Vilka <br> {{ form.who }}
+                </div>
+            </div>
+
+            <div id="table-row-4">
+            </div>
+                <div id="new-event">
+                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                    Skicka notis
+                </button>
+                </div>            
+        </div>
+    </form>
+</div>
+
+<script>
+function saveAlert() {
+    message = 'Vill du skicka notisen?'
+    return confirm(message)
+}
+</script>
+
+{% endblock %}

@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from adminInterface.utils import Firestore
-from adminInterface.models import Section
-from adminInterface.forms import SectionForm
-from adminInterface.models import Event
-from adminInterface.forms import EventForm
+from adminInterface.models import Event, Section
+from adminInterface.forms import EventForm, NotificationForm, SectionForm
+from adminInterface.utils.firebase_utils import Firestore
+from django.contrib import messages
 
 
 def singIn(request):
@@ -14,6 +13,53 @@ def singIn(request):
         return redirect('/start')
     else:
         return render(request, "signIn.html")
+
+
+@login_required
+def create_notification(request):
+    if request.method == 'POST':
+        form = NotificationForm(request.POST)
+        if form.is_valid():
+            statistics = form.save()
+
+            messages.info(
+                request,
+                'Notisen skickades till {0} användare'.format(
+                    statistics.get("success_count")
+                )
+            )
+
+            messages.info(
+                request,
+                'Notisen misslyckades att skickas till {0} användare'.format(
+                    statistics.get("failure_count")
+                )
+            )
+
+            if statistics.get("batches_failed") > 0:
+                messages.info(
+                    request,
+                    '{0} batches failed'.format(
+                        statistics.get("batches_failed")
+                    )
+                )
+
+            if len(statistics.get("error_reasons_counted")) > 0:
+                messages.info(
+                    request,
+                    'Orsaker till utskicket misslyckades:'
+                )
+
+            for exception, amount in statistics.get("error_reasons_counted"):
+                messages.info(
+                    request,
+                    '{0}: {1}'.format(exception, amount)
+                )
+
+            return redirect('/notifications/')
+    else:
+        form = NotificationForm()
+    return render(request, "create_notification.html", {'form': form})
 
 
 @login_required

@@ -1,9 +1,12 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-from adminInterface.utils import Firestore
+from adminInterface.utils.firebase_utils import Firestore
 
 
 class Section(models.Model):
+    class Meta:
+        managed = False
+
     firebase_id = models.CharField(max_length=60)
     sectionName = models.CharField(max_length=5)
     sectionFullName = models.CharField(max_length=60)
@@ -39,9 +42,23 @@ class Section(models.Model):
 
 
 class Event(models.Model):
+    class Meta:
+        managed = False
+
     firebase_id = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     disappear = models.DateTimeField(editable=True)
     form = models.URLField()
     release = models.DateTimeField(editable=True)
+    who = MultiSelectField(choices=Section.get_all_classes_tuple())
+
+
+class Notification(models.Model):
+    class Meta:
+        managed = False
+
+    title = models.CharField(max_length=65, help_text='Max 65 tecken')
+    body = models.CharField(max_length=240, help_text='Max 240 tecken')
+    sender = models.CharField(max_length=50)
+    senderDate = models.CharField(max_length=8)
     who = MultiSelectField(choices=Section.get_all_classes_tuple())

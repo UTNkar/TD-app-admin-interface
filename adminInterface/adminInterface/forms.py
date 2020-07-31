@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from adminInterface.models import Section
-from adminInterface.utils import Firestore
+from adminInterface.models import Event, Notification, Section
 from django import forms
-from adminInterface.models import Event
+from adminInterface.utils.firebase_utils import Firestore, CloudMessaging
+from adminInterface.fields import DataListWidget
 
 
 class SectionForm(ModelForm):
@@ -86,3 +86,52 @@ class EventForm(ModelForm):
             u'who': data.get('who')
         })
         return data
+
+
+class NotificationForm(ModelForm):
+    class Meta:
+        model = Notification
+        fields = ['title',
+                  'body',
+                  'sender',
+                  'who'
+                  ]
+    SENDER_CHOICES = [
+        'Rekå',
+        'Fadderkå',
+        'Mediakå',
+        'UTN',
+    ]
+
+    sender = forms.CharField(
+        max_length=50,
+        widget=DataListWidget(
+            data_list=SENDER_CHOICES,
+            name="sender"
+        )
+    )
+
+    def save(self):
+        data = self.cleaned_data
+
+        who = data.get('who')
+        db = Firestore.get_instance()
+        section_ref = db.collection('users').where('userClass', 'in', who)
+        docs = section_ref.stream()
+
+        registration_tokens = []
+        for doc in docs:
+            doc = doc.to_dict()
+            registration_token = doc.get("userToken")
+
+            if registration_token:
+                registration_tokens.append(registration_token)
+
+        response = CloudMessaging.send_notification(
+            registration_tokens,
+            data.get("title"),
+            data.get("body"),
+            data.get("sender")
+        )
+
+        return response

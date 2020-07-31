@@ -9,7 +9,8 @@ def navigation_bar(context):
     links = {
         'Start': "/start",
         'Sektioner': "/sections",
-        'Biljettsläpp': "/ticket-system"
+        'Biljettsläpp': "/ticket-system",
+        'Notiser': "/notifications",
     }
     return {
         'links': links,
