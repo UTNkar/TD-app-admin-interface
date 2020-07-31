@@ -7,6 +7,11 @@ from pytz import timezone
 
 @kronos.register('0 30 7,12 ? * * *')
 def send_automatic_notification():
+    """
+    Finds all events that occur tomorrow if the current time is between
+    12:00-13:00 or within 20-40 minutes if the time is 7:30 and sends a
+    notification to all users that can attend the event.
+    """
     current_time = datetime.now()
     current_date = datetime.today()
     current_hour = current_time.hour
