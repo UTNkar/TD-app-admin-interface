@@ -5,7 +5,7 @@ from adminInterface.utils.time_utils import localize_timestamp
 from pytz import timezone
 
 
-@kronos.register('0 30 7,12 ? * * *')
+@kronos.register('30 7,12 * * *')  # Everyday at 7:30 and 12:30
 def send_automatic_notification():
     """
     Finds all events that occur tomorrow if the current time is between
