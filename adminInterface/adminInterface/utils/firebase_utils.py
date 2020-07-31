@@ -99,41 +99,42 @@ class CloudMessaging():
 
         np_tokens = np.array(registration_tokens)
 
-        # A multicast message can only be sent to up to 100 registration
-        # tokens at a time. We therefor split the user's registration tokens
-        # into arrays with a maximum length of 99 just to have a safe margin
-        number_of_slices = ceil(np_tokens.size / 99)
-        users_chunks = np.array_split(np_tokens, number_of_slices)
-
-        # date without 0 / month without 0
-        time_now = datetime.datetime.now()
-        senderDate = time_now.strftime("%-d/%-m")
-
         responses = []
         failure_count = 0
         error_reasons = []
 
-        for users_chunk in users_chunks:
-            users_chunk_list = users_chunk.tolist()
-            message = messaging.MulticastMessage(
-                notification=messaging.Notification(
-                    title=title,
-                    body=content,
-                ),
-                data={
-                    'title': title,
-                    'body': content,
-                    'sender': sender,
-                    'senderDate': senderDate
-                },
-                tokens=users_chunk_list,
-            )
-            try:
-                response = messaging.send_multicast(message)
-                responses.append(response)
-            except Exception as error:
-                failure_count += len(users_chunk_list)
-                error_reasons.append(str(error))
+        # A multicast message can only be sent to up to 100 registration
+        # tokens at a time. We therefor split the user's registration tokens
+        # into arrays with a maximum length of 99 just to have a safe margin
+        number_of_slices = ceil(np_tokens.size / 99)
+        if number_of_slices > 0:
+            users_chunks = np.array_split(np_tokens, number_of_slices)
+
+            # date without 0 / month without 0
+            time_now = datetime.datetime.now()
+            senderDate = time_now.strftime("%-d/%-m")
+
+            for users_chunk in users_chunks:
+                users_chunk_list = users_chunk.tolist()
+                message = messaging.MulticastMessage(
+                    notification=messaging.Notification(
+                        title=title,
+                        body=content,
+                    ),
+                    data={
+                        'title': title,
+                        'body': content,
+                        'sender': sender,
+                        'senderDate': senderDate
+                    },
+                    tokens=users_chunk_list,
+                )
+                try:
+                    response = messaging.send_multicast(message)
+                    responses.append(response)
+                except Exception as error:
+                    failure_count += len(users_chunk_list)
+                    error_reasons.append(str(error))
 
         return {
             'responses': responses,
