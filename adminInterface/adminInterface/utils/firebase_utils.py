@@ -28,6 +28,34 @@ class Firestore():
             Firestore.dataBase = firestore.client()
         return Firestore.dataBase
 
+    @staticmethod
+    def get_user_registration_tokens_by_classes(classes):
+        """
+        Gets the registration token for all users that have selected one of the
+        classes in the classes array
+
+        Parameters:
+
+        classes (list of strings): The names of the classes
+
+        Returns
+
+        A list of strings containing the registration tokens
+        """
+        db = Firestore.get_instance()
+        section_ref = db.collection('users').where('userClass', 'in', classes)
+        docs = section_ref.stream()
+
+        registration_tokens = []
+        for doc in docs:
+            doc = doc.to_dict()
+            registration_token = doc.get("userToken")
+
+            if registration_token:
+                registration_tokens.append(registration_token)
+
+        return registration_tokens
+
 
 class CloudMessaging():
 
@@ -44,6 +72,7 @@ class CloudMessaging():
         The notifications are sent in batches of 99 per batch.
 
         Parameters:
+
         registration_tokens (list): A list of strings. Contains the
         registration tokens of the devices that the notification should be
         sent to
@@ -70,41 +99,42 @@ class CloudMessaging():
 
         np_tokens = np.array(registration_tokens)
 
-        # A multicast message can only be sent to up to 100 registration
-        # tokens at a time. We therefor split the user's registration tokens
-        # into arrays with a maximum length of 99 just to have a safe margin
-        number_of_slices = ceil(np_tokens.size / 99)
-        users_chunks = np.array_split(np_tokens, number_of_slices)
-
-        # date without 0 / month without 0
-        time_now = datetime.datetime.now()
-        senderDate = time_now.strftime("%-d/%-m")
-
         responses = []
         failure_count = 0
         error_reasons = []
 
-        for users_chunk in users_chunks:
-            users_chunk_list = users_chunk.tolist()
-            message = messaging.MulticastMessage(
-                notification=messaging.Notification(
-                    title=title,
-                    body=content,
-                ),
-                data={
-                    'title': title,
-                    'body': content,
-                    'sender': sender,
-                    'senderDate': senderDate
-                },
-                tokens=users_chunk_list,
-            )
-            try:
-                response = messaging.send_multicast(message)
-                responses.append(response)
-            except Exception as error:
-                failure_count += len(users_chunk_list)
-                error_reasons.append(str(error))
+        # A multicast message can only be sent to up to 100 registration
+        # tokens at a time. We therefor split the user's registration tokens
+        # into arrays with a maximum length of 99 just to have a safe margin
+        number_of_slices = ceil(np_tokens.size / 99)
+        if number_of_slices > 0:
+            users_chunks = np.array_split(np_tokens, number_of_slices)
+
+            # date without 0 / month without 0
+            time_now = datetime.datetime.now()
+            senderDate = time_now.strftime("%-d/%-m")
+
+            for users_chunk in users_chunks:
+                users_chunk_list = users_chunk.tolist()
+                message = messaging.MulticastMessage(
+                    notification=messaging.Notification(
+                        title=title,
+                        body=content,
+                    ),
+                    data={
+                        'title': title,
+                        'body': content,
+                        'sender': sender,
+                        'senderDate': senderDate
+                    },
+                    tokens=users_chunk_list,
+                )
+                try:
+                    response = messaging.send_multicast(message)
+                    responses.append(response)
+                except Exception as error:
+                    failure_count += len(users_chunk_list)
+                    error_reasons.append(str(error))
 
         return {
             'responses': responses,
@@ -122,7 +152,8 @@ class CloudMessaging():
         """
         Sends a notification to the devices that have their registration token
         in the registration_tokens list. The notifications are sent in batches
-        of 99 per batch.
+        of 99 per batch. If an error occurs or a notification could not be
+        delivered, the error will be logged
 
         Parameters:
         registration_tokens (list): A list of strings. Contains the
