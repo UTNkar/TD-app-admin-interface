@@ -30,4 +30,16 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    height: 5em;
+    margin-top: 0em;
+    padding-top: 1em;
+}
+
+#notifications {
+    list-style-type: none;
+    background-color: lightblue;
+    padding: 1em 2em;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1em;
 }

@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from adminInterface.utils import Firestore
-from adminInterface.models import Section
-from adminInterface.forms import SectionForm
-from adminInterface.models import Event
-from adminInterface.forms import EventForm
+from adminInterface.models import Event, Section
+from adminInterface.forms import EventForm, NotificationForm, SectionForm
+from adminInterface.utils.firebase_utils import Firestore
+from django.contrib import messages
 
 
 def singIn(request):
@@ -14,6 +13,53 @@ def singIn(request):
         return redirect('/start')
     else:
         return render(request, "signIn.html")
+
+
+@login_required
+def create_notification(request):
+    if request.method == 'POST':
+        form = NotificationForm(request.POST)
+        if form.is_valid():
+            statistics = form.save()
+
+            messages.info(
+                request,
+                'Notisen skickades till {0} användare'.format(
+                    statistics.get("success_count")
+                )
+            )
+
+            messages.info(
+                request,
+                'Notisen misslyckades att skickas till {0} användare'.format(
+                    statistics.get("failure_count")
+                )
+            )
+
+            if statistics.get("batches_failed") > 0:
+                messages.info(
+                    request,
+                    '{0} batches failed'.format(
+                        statistics.get("batches_failed")
+                    )
+                )
+
+            if len(statistics.get("error_reasons_counted")) > 0:
+                messages.info(
+                    request,
+                    'Orsaker till utskicket misslyckades:'
+                )
+
+            for exception, amount in statistics.get("error_reasons_counted"):
+                messages.info(
+                    request,
+                    '{0}: {1}'.format(exception, amount)
+                )
+
+            return redirect('/notifications/')
+    else:
+        form = NotificationForm()
+    return render(request, "create_notification.html", {'form': form})
 
 
 @login_required
@@ -93,15 +139,24 @@ def start(request):
 def sections(request):
     db = Firestore.get_instance()
     section_ref = db.collection('sections')
-    classes_docs = section_ref.stream()
+    section_docs = section_ref.stream()
     sections = []
 
-    for doc in classes_docs:
+    for doc in section_docs:
         doc_fields = doc.to_dict()
+        classNames = []
+
+        classes = doc_fields.get('classes', [])
+        for this_class in classes:
+            classNames.append(this_class.get("className"))
+
+        classes_string = ",".join(classNames)
+
         section = Section(
             firebase_id=doc.id,
             sectionName=doc_fields.get('sectionName'),
-            sectionFullName=doc_fields.get('sectionFullName')
+            sectionFullName=doc_fields.get('sectionFullName'),
+            classes=classes_string
         )
         sections.append(section)
 
@@ -128,11 +183,19 @@ def edit_section(request, id):
     section = section_ref.get()
     sec = section.to_dict()
 
+    classNames = []
+    for i in sec.get("classes"):
+        classNames.append(i.get("className"))
+
+    classes_string = ",".join(classNames)
+
     s = Section(
         firebase_id=id,
         sectionName=sec.get('sectionName'),
-        sectionFullName=sec.get('sectionFullName')
+        sectionFullName=sec.get('sectionFullName'),
+        classes=classes_string
     )
+
     sec_form = SectionForm(request.POST, instance=s)
     if request.method == 'POST':
         if sec_form.is_valid():

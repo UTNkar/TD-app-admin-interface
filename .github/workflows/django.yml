@@ -27,5 +27,3 @@ jobs:
         pip install -r dev-requirements.txt
     - name: Run flake8
       run: flake8 adminInterface
-    - name: Run tests
-      run: adminInterface/manage.py test
