@@ -16,7 +16,8 @@ def navigation_bar(context):
         'links': links,
         'request': context['request']
     }
-    
+
+
 @register.inclusion_tag("header.html", takes_context=True)
 def header(context):
     # The links must have the title as the key and the link as the value
