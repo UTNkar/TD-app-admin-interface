@@ -36,4 +36,4 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-KRONOS_PREFIX = 'export GOOGLE_APPLICATION_CREDENTIALS="admininterface-privatekey.json"'
+KRONOS_PREFIX = 'export GOOGLE_APPLICATION_CREDENTIALS="admininterface-privatekey.json" &&'
