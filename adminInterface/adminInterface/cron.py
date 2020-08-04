@@ -89,9 +89,11 @@ def send_automatic_notification():
                 "for automatic reminder notification"
             ))
 
-        CloudMessaging.send_notification(
+        statistics = CloudMessaging.send_notification(
             registration_tokens,
             title,
             content,
             sender
         )
+
+        print(statistics)
