@@ -26,7 +26,8 @@
                 </div>
 
                 <div id="col-2">
-                    Vilka <br> {{ form.who }}
+                    Vilka 
+                    <br> <input type="checkbox" onclick="toggle(this);" /> Alla<br /> {{ form.who }}
                 </div>
             </div>
 
@@ -45,6 +46,16 @@
 function saveAlert() {
     message = 'Vill du skicka notisen?'
     return confirm(message)
+}
+</script>
+
+<script>
+    function toggle(source) {
+    var checkboxes = document.getElementsByName('who');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
 }
 </script>
 
