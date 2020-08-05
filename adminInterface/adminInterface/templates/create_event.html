@@ -36,15 +36,14 @@
                 </div>
                 <div>
                     <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                            {% if edit_event %}
-                            Spara ändringar
-                            {%else%}
-                            Spara
-                            {% endif %}
-                        </button>
+                        {% if edit_event %}
+                        Spara ändringar
+                        {%else%}
+                        Spara
+                        {% endif %}
+                    </button>
                 </div>
             </div>
-
         </div>
     </div>
 </form>

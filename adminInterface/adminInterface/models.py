@@ -26,7 +26,6 @@ class Section(models.Model):
                 for section_class in section_classes:
                     class_name = section_class.get('className')
                     classes.append(class_name)
-
         return classes
 
     @staticmethod
