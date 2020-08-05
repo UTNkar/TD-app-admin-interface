@@ -32,7 +32,6 @@ main {
     flex-grow: 1;
     height: 5em;
     margin-top: 0em;
-    padding-top: 1em;
 }
 
 #notifications {
