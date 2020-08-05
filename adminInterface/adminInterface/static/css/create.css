@@ -20,6 +20,17 @@
     align-items: stretch;
 }
 
+#flex-container-content-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    flex-direction: column;
+    color: white;
+    background-color: #342A3B;
+    padding: 1em;
+    border-radius: 1.5em;
+}
+
 #flex-container-content-button {
     display: flex;
     flex-wrap: wrap;
@@ -63,6 +74,7 @@
     display: flex;
     flex-direction: column;
     justify-content: stretch;
+    flex-grow: 1;
 }
 
 #id_name {
@@ -84,6 +96,10 @@
 #id_who {
     list-style-type: none;
     padding-left: 0em;
+}
+
+#id_body {
+    height: 15em;
 }
 
 input[type=text] {

@@ -1,45 +1,42 @@
 {% extends "base.html"%} {% block content %}
-
-<div id="header-text">
-    Notiser
-</div>
-<div>
-    <form method="POST" action="{% url 'create_notification' %}" class="event-form">
-        {% csrf_token %}
-        <div id="event-form-box">
-                <div id="new-event">
-                    Skapa notis
+<form method="POST" action="{% url 'create_notification' %}" class="event-form">
+    {% csrf_token %}
+    <div id="flex-container">
+        <div>
+            <div id="new-event">
+                Ny notis
+            </div>
+            {{form.errors}}
+                        <div id="flex-container-content-button">
+                <div id="flex-container-content">
+                    <div>
+                        <div id="flex-container-content">
+                            <div id="content">
+                                Titel <br> {{ form.title }}
+                            </div>
+                            <div id="content">
+                                Avsändare <br> {{ form.sender }}
+                            </div>
+                        </div>
+                        <div id="flex-container-content-message">
+                            Meddelande <br> {{ form.body }}
+                        </div>
+                    </div>
+                    <div id="flex-container-content">
+                        <div id="content">
+                            Vilka <br> {{ form.who }}
+                        </div>
+                    </div>
                 </div>
-                {{form.errors}}
-            <div id="table-row-1">
-                <div id="col-1">
-                    Titel <br> {{ form.title }}
-                </div>
-                <div id="col-2">
-                    Meddelande <br> {{ form.body }}
+                <div>
+                    <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                        Skicka notis
+                    </button>
                 </div>
             </div>
-
-            <div id="table-row-2">
-                <div id="col-1">
-                    Avsändare <br> {{ form.sender }}
-                </div>
-
-                <div id="col-2">
-                    Vilka <br> {{ form.who }}
-                </div>
-            </div>
-
-            <div id="table-row-4">
-            </div>
-                <div id="new-event">
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    Skicka notis
-                </button>
-                </div>            
-        </div>
-    </form>
-</div>
+        <div> 
+    <div> 
+</form>
 
 <script>
 function saveAlert() {
