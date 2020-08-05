@@ -19,7 +19,10 @@
                     </div>
                     <div id="content">
                         Hela sektionsnamnet <br> {{ form.sectionFullName }}
-                    </div>  
+                    </div> 
+                    <div id="content">
+                    Klasser (format: klass1,klass2,klass3,...,klassX) <br> {{form.classes}}
+                </div> 
                 </div>
                 <div>
                     <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
@@ -30,24 +33,7 @@
                         {% endif %}
                     </button>
                 </div>
-            </div>
-            <div id="table-row-2">
-                <div id="col-2">
-                    Klasser (format: klass1,klass2,klass3,...,klassX) <br> {{form.classes}}
-                </div>
-            </div>
-
-            </div>
-                <div id="new-event">
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event %}
-                    Spara ändringar
-                    {%else%}
-                    Spara
-                    {% endif %}
-                </button>
-                </div>   
-            </div>         
+            </div>       
         </div>
     </div>
 </form>

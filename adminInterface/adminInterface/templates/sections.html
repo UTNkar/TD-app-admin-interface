@@ -17,6 +17,9 @@
         <div class="content">
             Långnamn: {{section.sectionFullName}}
         </div>
+        <div class="content">
+            Klasser: {{section.classes}}
+        </div>
         <div class="buttons">
             <a class="button" onclick="return deleteAlert()" href="{%url 'delete_section' section.firebase_id %}">
                 Ta bort
