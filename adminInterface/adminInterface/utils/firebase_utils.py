@@ -128,6 +128,7 @@ class CloudMessaging():
                         'senderDate': senderDate
                     },
                     tokens=users_chunk_list,
+                    android=messaging.AndroidConfig(priority='high')
                 )
                 try:
                     response = messaging.send_multicast(message)
