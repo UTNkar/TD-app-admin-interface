@@ -37,6 +37,6 @@ sentry_sdk.init(
 )
 
 KRONOS_PREFIX = (
-    'export GOOGLE_APPLICATION_CREDENTIALS="admininterface-privatekey.json" && '
-    'export SENTRY_DSN="{0}" &&'.format(os.environ.get("SENTRY_DSN"))
+    'export GOOGLE_APPLICATION_CREDENTIALS="{0}/admininterface-privatekey.json" && '
+    'export SENTRY_DSN="{1}" &&'.format(BASE_DIR, os.environ.get("SENTRY_DSN"))
 )
