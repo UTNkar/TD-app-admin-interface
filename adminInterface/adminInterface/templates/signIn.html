@@ -9,9 +9,41 @@
 
 <html lang="en">
 
-{% include "header.html" %}
+{% include "head.html" %}
 
 <body>
+    <header id="sign-in-header">
+        <img id="TD-logo" src="{% static 'images/TD-logo.png' %}">
+        <img id="arr-UTN-logo" src="{% static 'images/arr-UTN-logo.png' %}">
+    </header>
+    <div class="flex-container-sign-in">
+        <div class="form-container">
+            <h1 id="sign-in-h1">
+                TD-app-admin
+            </h1>
+            <div class="input-container">
+                <div class="input-div">
+                    Användarnamn:
+                    <div id="username">
+                        <input class="input" type="username" name="username">
+                    </div>
+                </div>
+                <div class="input-div">
+                    Lösenord:
+                    <div id="password">
+                        <input class="input" type="password" name="pass">
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <input id="login-button" type="submit" value="Logga in">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<!-- <body>
     <div>
         <img id="TD-logo" src="{% static 'images/TD-logo.png' %}">
     </div>
@@ -41,6 +73,6 @@
             </div>
         </form>
     </div>
-</body>
+</body> -->
 
 </html>
