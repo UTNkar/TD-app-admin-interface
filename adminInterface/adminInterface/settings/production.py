@@ -35,3 +35,9 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+KRONOS_PREFIX = (
+    'export GOOGLE_APPLICATION_CREDENTIALS="{0}/admininterface-privatekey.json" && '
+    'export SENTRY_DSN="{1}" &&'.format(BASE_DIR, os.environ.get("SENTRY_DSN"))
+)
+KRONOS_POSTFIX = "2>&1 | /usr/bin/logger -t ADMININTERFACE"
