@@ -26,7 +26,8 @@
                 </div>
 
                 <div id="col-2">
-                    Vilka <br> {{ form.who }}
+                    Vilka 
+                    <br> <input type="checkbox" onclick="toggle(this);" /> Alla<br /> {{ form.who }}
                 </div>
             </div>
 
@@ -47,5 +48,7 @@ function saveAlert() {
     return confirm(message)
 }
 </script>
+
+{% include "select-all.html" %}
 
 {% endblock %}
