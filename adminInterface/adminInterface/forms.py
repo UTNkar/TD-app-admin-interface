@@ -36,6 +36,12 @@ class SectionForm(ModelForm):
 
 
 class EventForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        self.fields["who"] = forms.MultipleChoiceField(
+            choices=Section.get_all_classes_tuple(),
+            widget=forms.CheckboxSelectMultiple
+        )
 
     disappear = forms.DateTimeField(
         input_formats=['%Y-%m-%dT%H:%M'],
@@ -110,6 +116,15 @@ class NotificationForm(ModelForm):
             name="sender"
         )
     )
+
+    # The number of classes can change during runtime and therefor we must
+    # add it dynamically
+    def __init__(self, *args, **kwargs):
+        super(NotificationForm, self).__init__(*args, **kwargs)
+        self.fields["who"] = forms.MultipleChoiceField(
+            choices=Section.get_all_classes_tuple(),
+            widget=forms.CheckboxSelectMultiple
+        )
 
     def save(self):
         data = self.cleaned_data
