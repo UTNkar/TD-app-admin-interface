@@ -125,6 +125,9 @@ def ticket_system(request):
             who=doc_fields.get('who')
         )
         events.append(event)
+
+    events.sort(key=lambda item: item.name)
+
     return render(request,
                   "ticket-system.html",
                   {"events": events})
@@ -159,6 +162,8 @@ def sections(request):
             classes=classes_string
         )
         sections.append(section)
+
+    sections.sort(key=lambda item: item.sectionName)
 
     return render(request, "sections.html", {"sections": sections})
 
