@@ -16,7 +16,7 @@ class Section(models.Model):
     def get_all_classes():
         db = Firestore.get_instance()
         section_ref = db.collection('sections')
-        docs = section_ref.stream()
+        docs = section_ref.get()
         classes = []
 
         for section in docs:
@@ -26,6 +26,8 @@ class Section(models.Model):
                 for section_class in section_classes:
                     class_name = section_class.get('className')
                     classes.append(class_name)
+
+        classes.sort(key=str.casefold)
 
         return classes
 
