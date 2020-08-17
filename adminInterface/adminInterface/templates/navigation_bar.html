@@ -5,11 +5,9 @@
 </script>
 {% endif %}
 
-<div id="sidenav">
-    <div class="flex-sideav">
-        <div id="cross" onclick="closeSidebar(this)">
-            x
-        </div>
+<aside id="sidenav">
+    <div class="sidenav-header">
+        <i class="fas fa-times" onclick="closeSidebar(this)"></i>
         <h1 id="header-sidenav">
             Inloggad som <br />
             {{request.user}}
@@ -23,18 +21,15 @@
             <a href="{{link}}">{{title}}</a>
         {%endif%}
     {% endfor %}
-</div> 
+</aside> 
 
 <script>
     function openSidebar(x) {
-        var sidenav = document.getElementById("sidenav");
+        const sidenav = document.getElementById("sidenav");
         sidenav.style.display = "block";
-        sidenav.style.position = "absolute"
-        sidenav.style.width = "70%"
-        sidenav.style.height = "100%"
     }
     function closeSidebar(x) {
-        var sidenav = document.getElementById("sidenav");
+        const sidenav = document.getElementById("sidenav");
         sidenav.style.display = "none";
     }
 </script>

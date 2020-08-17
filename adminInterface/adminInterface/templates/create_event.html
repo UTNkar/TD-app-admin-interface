@@ -1,35 +1,35 @@
-{% extends "base.html"%} {% block content %}
+{% extends "signed_in_base.html"%} {% block main_content %}
 <form method="POST" action="{% url 'create_event' %}" class="event-form">
     {% csrf_token %}
     {{form.firebase_id}}
     <div id="flex-container">
         <div>
             <div id="new-event">
-                {% if edit_event %} Ändra event {% else %} Nytt event {% endif %}
+                {% if edit_event %} Ändra biljettsläpp {% else %} Nytt biljettsläpp {% endif %}
             </div>
             {{form.errors}}
             <div id="flex-container-content-button">
                 <div id="flex-container-content">
                     <div>
                         <div id="flex-container-content">
-                            <div id="content">
-                                Eventnamn <br> {{ form.name }}
+                            <div class="content">
+                                Namn <br> {{ form.name }}
                             </div>
-                            <div id="content">
-                                Releasedatum och tid <br> {{ form.release }}
+                            <div class="content">
+                                Datum och tid då biljetter släpps <br> {{ form.release }}
                             </div>
                         </div>
                         <div id="flex-container-content">
-                            <div id="content">
+                            <div class="content">
                                 Anmälningslänk <br> {{ form.form }}
                             </div>
-                            <div id="content">
-                                Disappear (vad är detta) <br> {{ form.disappear }}
+                            <div class="content">
+                                Datum och tid biljettsläpp försvinner från appen <br> {{ form.disappear }}
                             </div>
                         </div>
                     </div>
                     <div id="flex-container-content">
-                        <div id="content">
+                        <div class="content">
                             Vilka <br> {{ form.who }}
                         </div>
                     </div>
@@ -52,7 +52,7 @@
         {% if edit_event %}
             message = 'Vill du spara ändringarna?' 
         {% else %}
-            message = 'Vill du spara eventet?' 
+            message = 'Vill du skapa biljettsläppet?' 
         {% endif %}
         
         return confirm(message)

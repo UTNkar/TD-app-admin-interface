@@ -3,29 +3,35 @@
     display: none;
     background-color: #342A3B;
     padding: 2em;
-    padding-top: 0em;
+    padding-top: 1em;
     z-index: 2;
+    position: fixed;
+    width: 70%;
+    bottom: 0;
+    top: 0;
 }
 
 #header-sidenav {
     font-size: 1.3em;
 }
 
-.flex-sidenav {
+.sidenav-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#cross {
+.fa-times:before {
     color: white;
-    font-size: 4em;
+    font-size: 3em;
 }
 
 @media only screen and (min-width: 600px) {
     #sidenav {
         display: block;
         padding-top: 2em;
+        position: initial;
+        width: auto;
     }
     #cross {
         display: none;
@@ -37,6 +43,7 @@
 }
 
 #sidenav a {
+    margin-top: .8em;
     text-decoration: none;
     font-size: 1.5em;
     color: white;

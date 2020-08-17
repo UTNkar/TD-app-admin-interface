@@ -1,10 +1,6 @@
 <header>
-    <div class="sidenav-mobile">
-        <div class="container" onclick="openSidebar(this)">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
+    <div class="sidenav-mobile-toggle">
+        <i class="fas fa-bars" onclick="openSidebar(this)"></i>
     </div>
     {% for title,link in links.items %}
         {% if link in request.path %}

@@ -1,4 +1,4 @@
-{% extends "base.html"%} {% block content %}
+{% extends "signed_in_base.html"%} {% block main_content %}
 <form method="POST" action="{% url 'create_notification' %}" class="event-form">
     {% csrf_token %}
     <div id="flex-container">
@@ -11,10 +11,10 @@
                 <div id="flex-container-content">
                     <div>
                         <div id="flex-container-content">
-                            <div id="content">
+                            <div class="content">
                                 Titel <br> {{ form.title }}
                             </div>
-                            <div id="content">
+                            <div class="content">
                                 Avsändare <br> {{ form.sender }}
                             </div>
                         </div>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div id="flex-container-content">
-                        <div id="content">
+                        <div class="content">
                             Vilka <br> {{ form.who }}
                         </div>
                     </div>

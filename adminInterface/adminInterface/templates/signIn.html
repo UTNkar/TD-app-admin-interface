@@ -1,5 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
 {% if msg %}
-
 <script>
     alert('{{msg}}')
 </script>
@@ -9,42 +10,37 @@
 
 <html lang="en">
 
-{% include "head.html" %}
+<main class="flex-container-sign-in">
+    <div class="form-container">
+        <h1 id="sign-in-h1">
+            Admin interface för TD-appen
+        </h1>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            <div class="input-container">
 
-<body>
-    <header id="sign-in-header">
-        <img id="TD-logo" src="{% static 'images/TD-logo.png' %}">
-        <img id="arr-UTN-logo" src="{% static 'images/arr-UTN-logo.png' %}">
-    </header>
-    <div class="flex-container-sign-in">
-        <div class="form-container">
-            <h1 id="sign-in-h1">
-                TD-app-admin
-            </h1>
-            <form action="/login/ " method="post">
-                {% csrf_token %}
-                <div class="input-container">
-
-                    <div class="input-div">
-                        Användarnamn:
-                        <div id="username">
-                            <input class="input" type="username" name="username">
-                        </div>
-                    </div>
-                    <div class="input-div">
-                        Lösenord:
-                        <div id="password">
-                            <input class="input" type="password" name="pass">
-                        </div>
+                <div class="input-div">
+                    Användarnamn:
+                    <div id="username">
+                        <input class="input" type="username" name="username">
                     </div>
                 </div>
-                <div class="button-container">
-                    <input id="login-button" type="submit" value="Logga in">
+                <div class="input-div">
+                    Lösenord:
+                    <div id="password">
+                        <input class="input" type="password" name="pass">
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="button-container">
+                <input id="login-button" type="submit" value="Logga in">
+            </div>
+        </form>
     </div>
+</main>
 
-</body>
+{% endblock %}
+
+
 
 </html>

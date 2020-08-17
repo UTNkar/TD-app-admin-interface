@@ -1,4 +1,4 @@
-{% extends "base.html"%} {% block content %}
+{% extends "signed_in_base.html"%} {% block main_content %}
 <form method="POST" action="{% url 'create_section' %}" class="event-form">
     {% csrf_token %}
     {{form.firebase_id}}
@@ -14,13 +14,13 @@
             {{form.errors}}
             <div id="flex-container-content-button">
                 <div id="flex-container-content">
-                    <div id="content">
+                    <div class="content">
                         Sektionsnamn <br> {{ form.sectionName }}
                     </div>
-                    <div id="content">
+                    <div class="content">
                         Hela sektionsnamnet <br> {{ form.sectionFullName }}
                     </div> 
-                    <div id="content">
+                    <div class="content">
                     Klasser (format: klass1,klass2,klass3,...,klassX) <br> {{form.classes}}
                 </div> 
                 </div>
