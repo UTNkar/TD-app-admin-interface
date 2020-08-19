@@ -1,5 +1,4 @@
 from django.db import models
-from multiselectfield import MultiSelectField
 from adminInterface.utils.firebase_utils import Firestore
 
 
@@ -16,7 +15,7 @@ class Section(models.Model):
     def get_all_classes():
         db = Firestore.get_instance()
         section_ref = db.collection('sections')
-        docs = section_ref.stream()
+        docs = section_ref.get()
         classes = []
 
         for section in docs:
@@ -26,6 +25,9 @@ class Section(models.Model):
                 for section_class in section_classes:
                     class_name = section_class.get('className')
                     classes.append(class_name)
+
+        classes.sort(key=str.casefold)
+
         return classes
 
     @staticmethod
@@ -49,7 +51,7 @@ class Event(models.Model):
     disappear = models.DateTimeField(editable=True)
     form = models.URLField()
     release = models.DateTimeField(editable=True)
-    who = MultiSelectField(choices=Section.get_all_classes_tuple())
+    who = models.CharField(max_length=100)
 
 
 class Notification(models.Model):
@@ -60,4 +62,4 @@ class Notification(models.Model):
     body = models.CharField(max_length=240, help_text='Max 240 tecken')
     sender = models.CharField(max_length=50)
     senderDate = models.CharField(max_length=8)
-    who = MultiSelectField(choices=Section.get_all_classes_tuple())
+    who = models.CharField(max_length=100)
