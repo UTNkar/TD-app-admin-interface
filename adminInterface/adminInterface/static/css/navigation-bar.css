@@ -33,7 +33,7 @@
         position: initial;
         width: auto;
     }
-    #cross {
+    .fa-times:before {
         display: none;
     }
 }
