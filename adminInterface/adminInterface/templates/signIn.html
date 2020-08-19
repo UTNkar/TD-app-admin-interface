@@ -1,5 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
 {% if msg %}
-
 <script>
     alert('{{msg}}')
 </script>
@@ -9,38 +10,37 @@
 
 <html lang="en">
 
-{% include "header.html" %}
-
-<body>
-    <div>
-        <img id="TD-logo" src="{% static 'images/TD-logo.png' %}">
-    </div>
-    <div>
-        <img id="arr-UTN-logo" src="{% static 'images/arr-UTN-logo.png' %}">
-    </div>
-    <div id="form-box">
-        <h1 id="#header-text">
-            TD-app-admin
+<main class="flex-container-sign-in">
+    <div class="form-container">
+        <h1 id="sign-in-h1">
+            Admin interface för TD-appen
         </h1>
-        <form action="/login/ " method="post">
+        <form action="/login/" method="post">
             {% csrf_token %}
-            <div id="username-box">
-                Användarnamn:
-                <div id="username">
-                    <input class="input" type="username" name="username">
+            <div class="input-container">
+
+                <div class="input-div">
+                    Användarnamn:
+                    <div id="username">
+                        <input class="input" type="username" name="username">
+                    </div>
+                </div>
+                <div class="input-div">
+                    Lösenord:
+                    <div id="password">
+                        <input class="input" type="password" name="pass">
+                    </div>
                 </div>
             </div>
-            <div id="password-box">
-                Lösenord:
-                <div id="password">
-                    <input class="input" type="password" name="pass">
-                </div>
-            </div>
-            <div>
+            <div class="button-container">
                 <input id="login-button" type="submit" value="Logga in">
             </div>
         </form>
     </div>
-</body>
+</main>
+
+{% endblock %}
+
+
 
 </html>

@@ -1,13 +1,40 @@
 @import url('https://rsms.me/inter/inter.css');
-.sidenav {
+#sidenav {
     display: none;
     background-color: #342A3B;
     padding: 2em;
+    padding-top: 1em;
+    z-index: 2;
+    position: fixed;
+    width: 70%;
+    bottom: 0;
+    top: 0;
+}
+
+#header-sidenav {
+    font-size: 1.3em;
+}
+
+.sidenav-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.fa-times:before {
+    color: white;
+    font-size: 3em;
 }
 
 @media only screen and (min-width: 600px) {
-    .sidenav {
+    #sidenav {
         display: block;
+        padding-top: 2em;
+        position: initial;
+        width: auto;
+    }
+    .fa-times:before {
+        display: none;
     }
 }
 
@@ -15,14 +42,14 @@
     color: #FF71FF !important;
 }
 
-.sidenav a {
+#sidenav a {
+    margin-top: .8em;
     text-decoration: none;
-    margin-top: 1em;
     font-size: 1.5em;
     color: white;
     display: block;
 }
 
-.sidenav a:hover {
+#sidenav a:hover {
     color: #FF71FF;
 }

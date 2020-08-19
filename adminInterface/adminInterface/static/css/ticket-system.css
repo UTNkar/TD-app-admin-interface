@@ -1,70 +1,27 @@
-#header-text {
-    font-size: 2em;
-    color: #342A3B;
-    background-color: white;
-}
-
-.header {
-    display: flex;
-    flex-wrap: wrap;
+.fa-bars:before {
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 0.5em;
 }
 
 .flex-container {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
+    padding-top: 0em;
     align-items: center;
-    justify-content: center;
 }
 
 @media only screen and (min-width: 600px) {
     .flex-container {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: left;
-        justify-content: left;
+        flex-direction: row;
+        align-items: stretch;
     }
-}
-
-.flex-container>* {
-    color: white;
-    background-color: #342A3B;
-    width: 15em;
-    height: 15em;
-    margin: 1em;
-    padding: 1.5em;
-    text-align: left;
-    border-radius: 1.5em;
-}
-
-.create-new {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    text-decoration: none;
-    order: -1;
+    .fa-bars:before {
+        display: none;
+    }
 }
 
 .plus {
     font-size: 6em;
-}
-
-.event-name {
-    color: #FF71FF;
-    font-size: 2em;
-    height: 2em !important;
-}
-
-.edit-button {
-    background-color: #FF71FF;
-    text-align: center;
-    color: white;
-    width: 6em;
-    height: 2em;
-    border-radius: 0.6em;
-}
-
-.edit-link {
-    text-decoration: none;
-    color: white;
 }

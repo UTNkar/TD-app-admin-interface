@@ -1,0 +1,43 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #342A3B;
+    width: 16em;
+    margin: 1em;
+    padding: 1.5em;
+    border-radius: 1.5em;
+}
+
+.card .title {
+    color: #FF71FF;
+    font-size: 2em;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+.card .content {
+    flex-grow: 1;
+}
+
+.card .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.card .button {
+    background-color: #FF71FF;
+    border-radius: 0.6em;
+    text-decoration: none;
+    color: white;
+    padding: 1em;
+}
+
+#add {
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+}

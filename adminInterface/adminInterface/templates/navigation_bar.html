@@ -5,11 +5,15 @@
 </script>
 {% endif %}
 
-<div class="sidenav">
-    <h1 id="#header-text">
-        Inloggad som <br />
-        {{request.user}}
-    </h1>
+<aside id="sidenav">
+    <div class="sidenav-header">
+        <i class="fas fa-times" onclick="closeSidebar(this)"></i>
+        <h1 id="header-sidenav">
+            Inloggad som <br />
+            {{request.user}}
+        </h1>
+    </div>
+    
     {% for title,link in links.items %}
         {% if link in request.path %}
             <a class="active" href="{{link}}">{{title}}</a>
@@ -17,4 +21,15 @@
             <a href="{{link}}">{{title}}</a>
         {%endif%}
     {% endfor %}
-</div> 
+</aside> 
+
+<script>
+    function openSidebar(x) {
+        const sidenav = document.getElementById("sidenav");
+        sidenav.style.display = "block";
+    }
+    function closeSidebar(x) {
+        const sidenav = document.getElementById("sidenav");
+        sidenav.style.display = "none";
+    }
+</script>

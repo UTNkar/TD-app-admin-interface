@@ -3,9 +3,7 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag("navigation_bar.html", takes_context=True)
-def navigation_bar(context):
-    # The links must have the title as the key and the link as the value
+def get_links(context):
     links = {
         'Start': "/start",
         'Sektioner': "/sections",
@@ -16,3 +14,15 @@ def navigation_bar(context):
         'links': links,
         'request': context['request']
     }
+
+
+@register.inclusion_tag("navigation_bar.html", takes_context=True)
+def navigation_bar(context):
+    # The links must have the title as the key and the link as the value
+    return get_links(context)
+
+
+@register.inclusion_tag("header.html", takes_context=True)
+def header(context):
+    # The links must have the title as the key and the link as the value
+    return get_links(context)

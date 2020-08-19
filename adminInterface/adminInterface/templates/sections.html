@@ -1,37 +1,32 @@
-{% extends "base.html"%} {% block content %}
-<header>
-    Sektioner
-</header>
+{% extends "signed_in_base.html"%} {% block main_content %}
+
 <div class="flex-container">
-    <a class="create-new" href="{% url 'create_section'  %}">
+    <a class="card" id="add" href="{% url 'create_section'  %}">
         <div class="plus">
             +
         </div>
         <div>
             Lägg till ny sektion
         </div>
-    </a> 
+    </a>
     {% for section in sections %}
-    <div>
-        <div class="event-name">
+    <div class="card">
+        <h2 class="title">
             {{section.sectionName}}
+        </h2>
+        <div class="content">
+            Långnamn: {{section.sectionFullName}}
         </div>
-        <div class="event-section">
-            långnamn: {{section.sectionFullName}}
-        </div>
-        <div class="event-section">
+        <div class="content">
             Klasser: {{section.classes}}
         </div>
-        
-        <div class="edit-button">
-            <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_section' section.firebase_id %}">
-                        Ta bort
-                </a>
-        </div>
-        <div class="edit-button">
-            <a class="edit-link" href="{% url 'edit_section' section.firebase_id %}"> 
-                        Redigera
-                    </a>
+        <div class="buttons">
+            <a class="button" href="{% url 'edit_section' section.firebase_id %}"> 
+                Redigera
+            </a>
+            <a class="button" onclick="return deleteAlert()" href="{%url 'delete_section' section.firebase_id %}">
+                Ta bort
+            </a>
         </div>
     </div>
     {% endfor %}

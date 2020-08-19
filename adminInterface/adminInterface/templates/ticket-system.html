@@ -1,54 +1,49 @@
-{% extends "base.html"%} {% block content %}
-<header>
-    Biljettsläpp
-</header>
+{% extends "signed_in_base.html"%} {% block main_content %}
+
 <div class="flex-container">
-    <a class="create-new" href="{% url 'create_event'  %}">
+    <a class="card" id="add" href="{% url 'create_event'  %}">
         <div class="plus">
             +
         </div>
         <div>
             Lägg till nytt biljettsläpp
         </div>
-    </a> {% for event in events %}
-    <div>
-        <div class="event-name">
-            {{event.name}}
+    </a>
+    {% for event in events %}
+     <div class="card" id="event">
+        <h2 class="title">
+             {{event.name}}
+        </h2>
+        <div class="content">
+            <p>
+                Länk: {{event.form}}
+            </p>
+            <p>
+                Tas bort: {{event.disappear}}
+            </p>
+            <p>
+                Datum & tid: {{event.release}}
+            </p>
+            <p>
+                Vilka: {%for class in event.who%} {{class}}, {% endfor %}
+            </p>
         </div>
-        <div>
-            Länk: {{event.form}}
-        </div>
-        <div>
-            Tas bort: {{event.disappear}}
-        </div>
-        <div> 
-            Datum & tid: {{event.release}}
-        </div>
-        <div>
-            Vilka: 
-            {%for class in event.who%} 
-            {{class}}, 
-            {% endfor %}
-        </div> 
-        <div class="edit-button">
-            <a onclick="return deleteAlert()" class="edit-link" href="{%url 'delete_event' event.firebase_id %}">
+        <div class="buttons">
+            <a class="button" href="{% url 'edit_event' event.firebase_id %}"> 
+                Redigera
+            </a>
+            <a class="button" onclick="return deleteAlert()" href="{%url 'delete_event' event.firebase_id %}">
                 Ta bort
             </a>
         </div>
-        <div class="edit-button">
-            <a class="edit-link" href="{% url 'edit_event' event.firebase_id %}"> 
-                Redigera
-            </a>
-        </div>
     </div>
-
     {% endfor %}
 </div>
 
 <script>
-function deleteAlert() {
-    return confirm('Är du säker på att du vill ta bort eventet?')
-}
+    function deleteAlert() {
+        return confirm('Är du säker på att du vill ta bort eventet?')
+    }
 </script>
 
 {%endblock%}

@@ -1,68 +1,62 @@
-{% extends "base.html"%} {% block content %}
-
-<div id="header-text">
-    Biljettsläpp
-</div>
-<div>
-    <form method="POST" action="{% url 'create_event' %}" class="event-form">
-        {% csrf_token %}
-        {{form.firebase_id}}
-        <div id="event-form-box">
-                <div id="new-event">
-                    {% if edit_event %}
-                    Ändra event
-                    {% else %}
-                    Nytt event
-                    {% endif %}
+{% extends "signed_in_base.html"%} {% block main_content %}
+<form method="POST" action="{% url 'create_event' %}" class="event-form">
+    {% csrf_token %}
+    {{form.firebase_id}}
+    <div id="flex-container">
+        <div>
+            <div id="new-event">
+                {% if edit_event %} Ändra biljettsläpp {% else %} Nytt biljettsläpp {% endif %}
+            </div>
+            {{form.errors}}
+            <div id="flex-container-content-button">
+                <div id="flex-container-content">
+                    <div>
+                        <div id="flex-container-content">
+                            <div class="content">
+                                Namn <br> {{ form.name }}
+                            </div>
+                            <div class="content">
+                                Datum och tid då biljetter släpps <br> {{ form.release }}
+                            </div>
+                        </div>
+                        <div id="flex-container-content">
+                            <div class="content">
+                                Anmälningslänk <br> {{ form.form }}
+                            </div>
+                            <div class="content">
+                                Datum och tid biljettsläpp försvinner från appen <br> {{ form.disappear }}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="flex-container-content">
+                        <div class="content">
+                            Vilka <br> {{ form.who }}
+                        </div>
+                    </div>
                 </div>
-                {{form.errors}}
-            <div id="table-row-1">
-                <div id="col-1">
-                    Eventnamn <br> {{ form.name }}
-                </div>
-                <div id="col-2">
-                    Releasedatum och tid <br> {{ form.release }}
+                <div>
+                    <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
+                        {% if edit_event %}
+                        Spara ändringar
+                        {%else%}
+                        Spara
+                        {% endif %}
+                    </button>
                 </div>
             </div>
-
-            <div id="table-row-2">
-                <div id="col-1">
-                    Anmälningslänk <br> {{ form.form }}
-                </div>
-
-                <div id="col-2">
-                    Disappear (vad är detta) <br> {{ form.disappear }}
-                </div>
-            </div>
-
-            <div id="table-row-3">
-                <div id="col-1">
-                    Vilka 
-                    <br> <input type="checkbox" onclick="toggle(this);" /> Alla<br /> {{ form.who }}
-                </div>
-            </div>
-                <div id="new-event">
-                <button onclick="return saveAlert()" id="submit-button" type="submit" class="save btn btn-default">
-                    {% if edit_event %}
-                    Spara ändringar
-                    {%else%}
-                    Spara
-                    {% endif %}
-                </button>
-                </div>            
         </div>
-    </form>
-</div>
-
+    </div>
+</form>
 <script>
-function saveAlert() {
-    {% if edit_event %}
-    message = 'Vill du spara ändringarna?'
-    {%else%}
-    message = 'Vill du spara eventet?'
-    {% endif %}
-    return confirm(message)
-}
+    function saveAlert() {
+        {% if edit_event %}
+            message = 'Vill du spara ändringarna?' 
+        {% else %}
+            message = 'Vill du skapa biljettsläppet?' 
+        {% endif %}
+        
+        return confirm(message)
+    }
 </script>
 
 {% include "select-all.html" %}

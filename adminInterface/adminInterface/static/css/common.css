@@ -9,15 +9,33 @@ h1 {
     color: white;
     font-size: 1em;
     text-align: center;
-    height: 5em;
-    margin-top: 0em;
-    padding-top: 1em;
 }
 
-.main {
-    margin-left: 15em;
-    /* Same as the width of the sidebar */
-    padding: 0px 10px;
+* {
+    box-sizing: border-box;
+}
+
+header p {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #342A3B;
+    padding: 0.5em;
+    color: white;
+    font-size: 2em;
+    z-index: 1;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 0em;
 }
 
 #notifications {
