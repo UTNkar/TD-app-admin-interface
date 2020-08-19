@@ -29,11 +29,11 @@
             </p>
         </div>
         <div class="buttons">
-            <a class="button" onclick="return deleteAlert()" href="{%url 'delete_event' event.firebase_id %}">
-                Ta bort
-            </a>
             <a class="button" href="{% url 'edit_event' event.firebase_id %}"> 
                 Redigera
+            </a>
+            <a class="button" onclick="return deleteAlert()" href="{%url 'delete_event' event.firebase_id %}">
+                Ta bort
             </a>
         </div>
     </div>
