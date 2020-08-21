@@ -30,7 +30,12 @@
                     </div>
                     <div id="flex-container-content">
                         <div class="content">
-                            Vilka <br> {{ form.who }}
+                            Vilka<br>
+                            <label for="toggle-all">
+                                <input id="toggle-all" type="checkbox" onclick="toggle(this);" />
+                                Alla
+                            </label>
+                            {{ form.who }}
                         </div>
                     </div>
                 </div>
@@ -50,11 +55,11 @@
 <script>
     function saveAlert() {
         {% if edit_event %}
-            message = 'Vill du spara ändringarna?' 
+            message = 'Vill du spara ändringarna?'
         {% else %}
-            message = 'Vill du skapa biljettsläppet?' 
+            message = 'Vill du skapa biljettsläppet?'
         {% endif %}
-        
+
         return confirm(message)
     }
 </script>
