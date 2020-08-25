@@ -62,4 +62,4 @@ class Notification(models.Model):
     body = models.CharField(max_length=240, help_text='Max 240 tecken')
     sender = models.CharField(max_length=50)
     senderDate = models.CharField(max_length=8)
-    who = models.CharField(max_length=100)
+    who = models.CharField(max_length=500)
