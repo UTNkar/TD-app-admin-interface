@@ -13,6 +13,13 @@ class Section(models.Model):
 
     @staticmethod
     def get_all_classes():
+        """
+        Gets all classes from all sections
+
+        Returns
+
+        A list of all classes
+        """
         db = Firestore.get_instance()
         section_ref = db.collection('sections')
         docs = section_ref.get()
@@ -32,6 +39,13 @@ class Section(models.Model):
 
     @staticmethod
     def get_all_classes_tuple():
+        """
+        Places all classes in tuples
+
+        Returns
+
+        A list of tuples with one class respresented twice in a tuple
+        """
         classes = Section.get_all_classes()
         classes_tuple = []
 

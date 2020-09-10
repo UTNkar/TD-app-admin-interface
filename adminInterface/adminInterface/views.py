@@ -8,6 +8,9 @@ from django.contrib import messages
 
 
 def singIn(request):
+    """
+    Redirects to the first page when signed in
+    """
     current_user = request.user
     if current_user.is_authenticated:
         return redirect('/start')
@@ -17,6 +20,9 @@ def singIn(request):
 
 @login_required
 def create_notification(request):
+    """
+    Redirects to a page where it is possible to create a notification
+    """
     if request.method == 'POST':
         form = NotificationForm(request.POST)
         if form.is_valid():
@@ -64,6 +70,13 @@ def create_notification(request):
 
 @login_required
 def delete_event(request, id):
+    """
+    Redirects back to the event page when an event has been deleted
+
+    Parameters:
+
+    id (int): ID of the event that has been deleted
+    """
     db = Firestore.get_instance()
     event_ref = db.collection(u'event').document(id)
     event_ref.delete()
@@ -72,6 +85,9 @@ def delete_event(request, id):
 
 @login_required
 def create_event(request):
+    """
+    Redirects to a page where it is possible to create an event
+    """
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
@@ -84,6 +100,13 @@ def create_event(request):
 
 @login_required
 def edit_event(request, id):
+    """
+    Redirects to a page where it is possible to edit an event
+
+    Parameters:
+
+    id (int): ID of the event to be edited
+    """
     db = Firestore.get_instance()
     event_ref = db.collection(u'event').document(id)
     event = event_ref.get()
@@ -109,6 +132,9 @@ def edit_event(request, id):
 
 @login_required
 def ticket_system(request):
+    """
+    Redirects to a page that shows all events
+    """
     db = Firestore.get_instance()
     events_ref = db.collection(u'event')
     docs = events_ref.stream()
@@ -135,11 +161,17 @@ def ticket_system(request):
 
 @login_required
 def start(request):
+    """
+    Shows the start page where it is possible to sign in
+    """
     return render(request, "welcome.html")
 
 
 @login_required
 def sections(request):
+    """
+    Redirects to a page that shows all sections
+    """
     db = Firestore.get_instance()
     section_ref = db.collection('sections')
     section_docs = section_ref.stream()
@@ -170,6 +202,9 @@ def sections(request):
 
 @login_required
 def create_section(request):
+    """
+    Redirects to a page where it is possible to create a section
+    """
     if request.method == 'POST':
         sec_form = SectionForm(request.POST)
         if sec_form.is_valid():
@@ -183,6 +218,13 @@ def create_section(request):
 
 @login_required
 def edit_section(request, id):
+    """
+    Redirects to a page where it is possible to edit a section
+
+    Parameters:
+
+    id (int): ID of the section to be edited
+    """
     db = Firestore.get_instance()
     section_ref = db.collection('sections').document(id)
     section = section_ref.get()
@@ -215,6 +257,13 @@ def edit_section(request, id):
 
 @login_required
 def delete_section(request, id):
+    """
+    Redirects back to the section page when a section has been deleted
+
+    Parameters:
+
+    id (int): ID of the section that has been deleted
+    """
     db = Firestore.get_instance()
     section_ref = db.collection('sections').document(id)
     section_ref.delete()
@@ -222,6 +271,9 @@ def delete_section(request, id):
 
 
 def login_user(request):
+    """
+    Authenticates the user. A successful login redirects to the first page when signed in. An unsuccessful login redirects back to the start page where it is possible to sign in.
+    """
     uname = request.POST.get('username')
     passw = request.POST.get("pass")
     user = authenticate(request, username=uname, password=passw)
