@@ -2,7 +2,11 @@
 
 ## Installation
 1. Install Python 3
-2. Install python3-venv
+2. Install the following packages:
+  - python3-venv
+  - python3-dev
+  - build-essentials
+  - libpq-dev
 3. Clone the repository
 4. Copy the file `.env-template` and name the copy `.env`
 5. Fill in the necessary variables in `.env`
