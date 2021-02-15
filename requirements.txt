@@ -6,7 +6,7 @@ firebase-admin==4.4.0
 psycopg2==2.8.6
 
 # Logging to sentry
-sentry-sdk==0.18.0
+sentry-sdk==0.20.1
 
 numpy==1.19.2
 
